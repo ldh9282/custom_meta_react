@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useGlboalContext } from "../../context";
+import { useGlboalContext } from "../../../context";
 import $ from "jquery";
 import { useEffect, useState } from "react";
-import { CmmnUtils } from "../../cmmn/utils/CmmnUtils";
-import { AlertUtils } from "../../cmmn/utils/AlertUtils";
-import { LogUtils } from "../../cmmn/utils/LogUtils";
+import { CmmnUtils } from "../../../cmmn/utils/CmmnUtils";
+import { AlertUtils } from "../../../cmmn/utils/AlertUtils";
+import { LogUtils } from "../../../cmmn/utils/LogUtils";
 
 const SchemaMetaReg = () => {
     /** 전역상태 */
@@ -42,14 +42,13 @@ const SchemaMetaReg = () => {
                     CmmnUtils.requestBody(requestMap)
                 )
                 .then((response) => {
-                    if (CmmnUtils.header(response).status === "0000") {
+                    let header = CmmnUtils.header(response);
+                    if (header.status === "0000") {
                         AlertUtils.showSuccess("등록되었습니다", () =>
                             navigate("/METTB01")
                         );
                     } else {
-                        AlertUtils.showError(
-                            CmmnUtils.header(response).errorMsg
-                        );
+                        AlertUtils.showError(header.errorMsg);
                     }
                 })
                 .catch((error) => {

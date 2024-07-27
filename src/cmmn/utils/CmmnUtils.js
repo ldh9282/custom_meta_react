@@ -13,22 +13,24 @@ export class CmmnUtils {
         if (url.charAt(0) === "/") {
             url = url.substring(1);
         }
-        LogUtils.trace(url);
+        LogUtils.trace(`[${url}]`);
         return path + url;
     }
 
     static requestParam(data) {
-        LogUtils.trace(data);
+        LogUtils.trace("[@RequestParam]", data);
         return { params: data };
     }
     static requestBody(data) {
-        LogUtils.trace({ ...data });
+        LogUtils.trace("[@RequestBody]", { ...data });
         return { ...data };
     }
 
     static header(response) {
         if (response.data?.header.status === "0000") {
-            LogUtils.trace(response.data?.body);
+            LogUtils.trace("[정상응답]", response.data?.body);
+        } else {
+            LogUtils.trace("[실패응답]", response.data?.header.errorMsg);
         }
         return response.data?.header;
     }

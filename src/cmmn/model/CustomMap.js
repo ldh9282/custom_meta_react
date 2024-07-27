@@ -6,6 +6,12 @@ export class CustomMap {
         }
     }
 
+    delete(key) {
+        delete this.map[key];
+    }
+    remove(key) {
+        this.delete(key);
+    }
     set(key, value) {
         if (key.includes("_")) {
             key = this._convertUnderscoreToCamelCase(key);
@@ -27,14 +33,12 @@ export class CustomMap {
 
         const value = this.get(key);
 
-        if (value === undefined || value === null) {
+        if (!value) {
             return defaultValue;
         } else if (typeof value === "string") {
             return value;
         } else if (typeof value === "number") {
             return value.toString();
-        } else if (value instanceof CustomMap) {
-            return `CustomMap ${JSON.stringify(value.toHashMap())}`;
         } else if (Array.isArray(value)) {
             if (value.length === 0) {
                 return "Empty List";
@@ -53,12 +57,12 @@ export class CustomMap {
 
         const value = this.get(key);
 
-        if (value === undefined || value === null) {
+        if (!value) {
             return defaultValue;
         } else if (typeof value === "string") {
             return parseInt(value);
         } else if (typeof value === "number") {
-            return value;
+            return parseInt(value);
         } else {
             throw new Error(
                 `CustomMap.getInt ::: value is not a valid number [${value}]`
@@ -77,7 +81,7 @@ export class CustomMap {
 
         const value = this.get(key);
 
-        if (value === undefined || value === null) {
+        if (!value) {
             return defaultValue;
         } else if (typeof value === "string") {
             return parseFloat(value);
@@ -101,7 +105,7 @@ export class CustomMap {
 
         const value = this.get(key);
 
-        if (value === undefined || value === null) {
+        if (!value) {
             return defaultValue;
         } else if (typeof value === "string") {
             return value.toLowerCase() === "true";
@@ -121,7 +125,7 @@ export class CustomMap {
 
         const value = this.get(key);
 
-        if (value === undefined || value === null) {
+        if (!value) {
             return null;
         }
 
@@ -141,7 +145,7 @@ export class CustomMap {
 
         const value = this.get(key);
 
-        if (value === undefined || value === null) {
+        if (!value) {
             throw new Error("CustomMap.getCustomMapList ::: value is null");
         }
 
@@ -178,7 +182,7 @@ export class CustomMap {
 
         const value = this.get(key);
 
-        if (value === undefined || value === null) {
+        if (!value) {
             throw new Error("CustomMap.getObjectList ::: value is null");
         }
 
@@ -196,7 +200,7 @@ export class CustomMap {
 
         const value = this.get(key);
 
-        if (value === undefined || value === null) {
+        if (!value) {
             throw new Error("CustomMap.getList ::: value is null");
         }
 

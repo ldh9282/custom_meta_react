@@ -19,6 +19,7 @@ const SeqMetaList = () => {
     const [defaultMap, setDefaultMap] = useState({
         pageNum: "1",
         rowAmountPerPage: "10",
+        seqMetaSno: "",
         seqName: "",
         schemaName: "",
         tableName: "",
@@ -28,6 +29,7 @@ const SeqMetaList = () => {
     const [searchMap, setSearchMap] = useState({
         pageNum: "1",
         rowAmountPerPage: "10",
+        seqMetaSno: "",
         seqName: "",
         schemaName: "",
         tableName: "",
@@ -49,7 +51,8 @@ const SeqMetaList = () => {
         CmmnUtils.axios
             .get(CmmnUtils.url("METSE01"), CmmnUtils.requestParam(defaultMap))
             .then((response) => {
-                if (CmmnUtils.header(response).status === "0000") {
+                let header = CmmnUtils.header(response);
+                if (header.status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
                     let seqMetaInfoList = body.seqMetaInfoList;
@@ -60,7 +63,7 @@ const SeqMetaList = () => {
                     setData(seqMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
-                    AlertUtils.showError(CmmnUtils.header(response).errorMsg);
+                    AlertUtils.showError(header.errorMsg);
                 }
             })
             .catch((error) => {
@@ -74,9 +77,13 @@ const SeqMetaList = () => {
      */
     const handleSearch = () => {
         CmmnUtils.axios
-            .get(CmmnUtils.url("METSE01"), CmmnUtils.requestParam(searchMap))
+            .get(
+                CmmnUtils.url("METSE01"),
+                CmmnUtils.requestParam({ ...searchMap, pageNum: "1" })
+            )
             .then((response) => {
-                if (CmmnUtils.header(response).status === "0000") {
+                let header = CmmnUtils.header(response);
+                if (header.status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
                     let seqMetaInfoList = body.seqMetaInfoList;
@@ -87,7 +94,7 @@ const SeqMetaList = () => {
                     setData(seqMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
-                    alert(CmmnUtils.header(response).errorMsg);
+                    AlertUtils.showError(header.errorMsg);
                 }
             })
             .catch((error) => {
@@ -106,11 +113,13 @@ const SeqMetaList = () => {
                 CmmnUtils.url("METSE01"),
                 CmmnUtils.requestParam({
                     ...defaultMap,
+                    pageNum: "1",
                     rowAmountPerPage: theRowAmountPerPage,
                 })
             )
             .then((response) => {
-                if (CmmnUtils.header(response).status === "0000") {
+                let header = CmmnUtils.header(response);
+                if (header.status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
                     let seqMetaInfoList = body.seqMetaInfoList;
@@ -121,7 +130,7 @@ const SeqMetaList = () => {
                     setData(seqMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
-                    AlertUtils.showError(CmmnUtils.header(response).errorMsg);
+                    AlertUtils.showError(header.errorMsg);
                 }
             })
             .catch((error) => {
@@ -140,7 +149,9 @@ const SeqMetaList = () => {
                 CmmnUtils.requestParam({ ...defaultMap, pageNum: pageNum })
             )
             .then((response) => {
-                if (CmmnUtils.header(response).status === "0000") {
+                let header = CmmnUtils.header(response);
+
+                if (header.status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
                     let seqMetaInfoList = body.seqMetaInfoList;
@@ -151,7 +162,7 @@ const SeqMetaList = () => {
                     setData(seqMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
-                    AlertUtils.showError(CmmnUtils.header(response).errorMsg);
+                    AlertUtils.showError(header.errorMsg);
                 }
             })
             .catch((error) => {
@@ -175,6 +186,23 @@ const SeqMetaList = () => {
                         <option value="50">50개</option>
                         <option value="100">100개</option>
                     </select>
+                </div>
+                <div className="grid grid-cols-3 gap-4 mb-3">
+                    <div>
+                        <label htmlFor="seqMetaSno">시퀀스메타일련번호:</label>
+                        <input
+                            type="text"
+                            id="seqMetaSno"
+                            value={searchMap.seqMetaSno}
+                            onChange={(e) =>
+                                setSearchMap({
+                                    ...searchMap,
+                                    seqMetaSno: e.target.value,
+                                })
+                            }
+                            className="ml-2 p-2 border w-full"
+                        />
+                    </div>
                 </div>
                 <div className="grid grid-cols-3 gap-4 mb-3">
                     <div>

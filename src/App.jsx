@@ -14,7 +14,7 @@ import { Slide, ToastContainer } from "react-toastify";
 import ColumnMetaList from "./meta2024/column/component/ColumnMetaList";
 import Dimm from "./cmmn/component/Dimm";
 import SeqMetaList from "./meta2024/seq/component/seqMetaList";
-import SchemaMetaReg from "./meta2024/schema/schemaMetaReg";
+import SchemaMetaReg from "./meta2024/schema/component/SchemaMetaReg";
 
 function App() {
     return (

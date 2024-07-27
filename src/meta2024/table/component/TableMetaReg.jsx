@@ -34,12 +34,13 @@ const TableMetaReg = () => {
         CmmnUtils.axios
             .get(CmmnUtils.url("METTB02"), CmmnUtils.requestParam({}))
             .then((response) => {
-                if (CmmnUtils.header(response).status === "0000") {
+                let header = CmmnUtils.header(response);
+                if (header.status === "0000") {
                     let schemaNameInfo =
                         CmmnUtils.body(response).schemaNameInfo;
                     setSchemaNameList(schemaNameInfo.list);
                 } else {
-                    alert(CmmnUtils.header(response).errorMsg);
+                    AlertUtils.showError(header.errorMsg);
                 }
             })
             .catch((error) => {
@@ -166,14 +167,13 @@ const TableMetaReg = () => {
                     CmmnUtils.requestBody(requestMap)
                 )
                 .then((response) => {
-                    if (CmmnUtils.header(response).status === "0000") {
+                    let header = CmmnUtils.header(response);
+                    if (header.status === "0000") {
                         AlertUtils.showSuccess("등록되었습니다", () =>
                             navigate("/METTB01")
                         );
                     } else {
-                        AlertUtils.showError(
-                            CmmnUtils.header(response).errorMsg
-                        );
+                        AlertUtils.showError(header.errorMsg);
                     }
                 })
                 .catch((error) => {
