@@ -29,7 +29,7 @@ const TableMetaReg = () => {
 
     /** 초기조회 */
     useEffect(() => {
-        CmmnUtils.setTitle("테이블등록");
+        CmmnUtils.setTitle("테이블생성");
 
         CmmnUtils.axios
             .get(CmmnUtils.url("METTB02"), CmmnUtils.requestParam({}))

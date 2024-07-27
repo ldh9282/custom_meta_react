@@ -83,10 +83,9 @@ const TableMetaList = () => {
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
                     setData(tableMetaInfoList);
-                    LogUtils.debug(tableMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
-                    alert(CmmnUtils.header(response).errorMsg);
+                    AlertUtils.showError(CmmnUtils.header(response).errorMsg);
                 }
             })
             .catch((error) => {

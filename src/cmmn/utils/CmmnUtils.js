@@ -27,7 +27,9 @@ export class CmmnUtils {
     }
 
     static header(response) {
-        LogUtils.trace(response.data?.body);
+        if (response.data?.header.status === "0000") {
+            LogUtils.trace(response.data?.body);
+        }
         return response.data?.header;
     }
 

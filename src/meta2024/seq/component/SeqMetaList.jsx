@@ -7,11 +7,11 @@ import { useGlboalContext } from "../../../context";
 import PagingCreator from "../../../cmmn/component/PagingCreator";
 
 /**
- * @function ColumnMetaList
- * @desc 컬럼목록 컴포넌트
+ * @function SeqMetaList
+ * @desc 시퀀스목록 컴포넌트
  * @returns
  */
-const ColumnMetaList = () => {
+const SeqMetaList = () => {
     /** 전역상태 */
     const { confirmModal } = useGlboalContext();
 
@@ -19,9 +19,7 @@ const ColumnMetaList = () => {
     const [defaultMap, setDefaultMap] = useState({
         pageNum: "1",
         rowAmountPerPage: "10",
-        columnName: "",
-        columnCamelName: "",
-        columnSnakeName: "",
+        seqName: "",
         schemaName: "",
         tableName: "",
         tableDesc: "",
@@ -30,9 +28,7 @@ const ColumnMetaList = () => {
     const [searchMap, setSearchMap] = useState({
         pageNum: "1",
         rowAmountPerPage: "10",
-        columnName: "",
-        columnCamelName: "",
-        columnSnakeName: "",
+        seqName: "",
         schemaName: "",
         tableName: "",
         tableDesc: "",
@@ -48,20 +44,20 @@ const ColumnMetaList = () => {
 
     /** 초기조회 */
     useEffect(() => {
-        CmmnUtils.setTitle("컬럼목록");
+        CmmnUtils.setTitle("시퀀스목록");
 
         CmmnUtils.axios
-            .get(CmmnUtils.url("METCU01"), CmmnUtils.requestParam(defaultMap))
+            .get(CmmnUtils.url("METSE01"), CmmnUtils.requestParam(defaultMap))
             .then((response) => {
                 if (CmmnUtils.header(response).status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
-                    let columnMetaInfoList = body.columnMetaInfoList;
+                    let seqMetaInfoList = body.seqMetaInfoList;
                     let thePagingCreator = body.pagingCreator;
 
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
-                    setData(columnMetaInfoList);
+                    setData(seqMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
                     AlertUtils.showError(CmmnUtils.header(response).errorMsg);
@@ -78,17 +74,17 @@ const ColumnMetaList = () => {
      */
     const handleSearch = () => {
         CmmnUtils.axios
-            .get(CmmnUtils.url("METCU01"), CmmnUtils.requestParam(searchMap))
+            .get(CmmnUtils.url("METSE01"), CmmnUtils.requestParam(searchMap))
             .then((response) => {
                 if (CmmnUtils.header(response).status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
-                    let columnMetaInfoList = body.columnMetaInfoList;
+                    let seqMetaInfoList = body.seqMetaInfoList;
                     let thePagingCreator = body.pagingCreator;
 
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
-                    setData(columnMetaInfoList);
+                    setData(seqMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
                     alert(CmmnUtils.header(response).errorMsg);
@@ -107,7 +103,7 @@ const ColumnMetaList = () => {
     const handleChangeRowAmount = (theRowAmountPerPage) => {
         CmmnUtils.axios
             .get(
-                CmmnUtils.url("METCU01"),
+                CmmnUtils.url("METSE01"),
                 CmmnUtils.requestParam({
                     ...defaultMap,
                     rowAmountPerPage: theRowAmountPerPage,
@@ -117,12 +113,12 @@ const ColumnMetaList = () => {
                 if (CmmnUtils.header(response).status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
-                    let columnMetaInfoList = body.columnMetaInfoList;
+                    let seqMetaInfoList = body.seqMetaInfoList;
                     let thePagingCreator = body.pagingCreator;
 
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
-                    setData(columnMetaInfoList);
+                    setData(seqMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
                     AlertUtils.showError(CmmnUtils.header(response).errorMsg);
@@ -140,19 +136,19 @@ const ColumnMetaList = () => {
     const goToPaging = (pageNum) => {
         CmmnUtils.axios
             .get(
-                CmmnUtils.url("METCU01"),
+                CmmnUtils.url("METSE01"),
                 CmmnUtils.requestParam({ ...defaultMap, pageNum: pageNum })
             )
             .then((response) => {
                 if (CmmnUtils.header(response).status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
-                    let columnMetaInfoList = body.columnMetaInfoList;
+                    let seqMetaInfoList = body.seqMetaInfoList;
                     let thePagingCreator = body.pagingCreator;
 
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
-                    setData(columnMetaInfoList);
+                    setData(seqMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
                     AlertUtils.showError(CmmnUtils.header(response).errorMsg);
@@ -165,7 +161,7 @@ const ColumnMetaList = () => {
 
     return (
         <div>
-            <h5 className="text-xl font-bold">컬럼목록</h5>
+            <h5 className="text-xl font-bold">시퀀스목록</h5>
             <form>
                 <div className="mb-3">
                     <select
@@ -182,45 +178,15 @@ const ColumnMetaList = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-4 mb-3">
                     <div>
-                        <label htmlFor="columnName">컬럼명:</label>
+                        <label htmlFor="columnName">시퀀스명:</label>
                         <input
                             type="text"
-                            id="columnName"
-                            value={searchMap.columnName}
+                            id="seqName"
+                            value={searchMap.seqName}
                             onChange={(e) =>
                                 setSearchMap({
                                     ...searchMap,
-                                    columnName: e.target.value,
-                                })
-                            }
-                            className="ml-2 p-2 border w-full"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="columnCamelName">컬럼카멜명:</label>
-                        <input
-                            type="text"
-                            id="columnCamelName"
-                            value={searchMap.columnCamelName}
-                            onChange={(e) =>
-                                setSearchMap({
-                                    ...searchMap,
-                                    schemaName: e.target.value,
-                                })
-                            }
-                            className="ml-2 p-2 border w-full"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="columnSnakeName">컬럼스네이크명:</label>
-                        <input
-                            type="text"
-                            id="columnSnakeName"
-                            value={searchMap.columnSnakeName}
-                            onChange={(e) =>
-                                setSearchMap({
-                                    ...searchMap,
-                                    columnSnakeName: e.target.value,
+                                    seqName: e.target.value,
                                 })
                             }
                             className="ml-2 p-2 border w-full"
@@ -294,8 +260,8 @@ const ColumnMetaList = () => {
                 </colgroup>
                 <thead>
                     <tr className="bg-gray-200">
-                        <th className="p-2 border">컬럼메타일련번호</th>
-                        <th className="p-2 border">컬럼명</th>
+                        <th className="p-2 border">시퀀스메타일련번호</th>
+                        <th className="p-2 border">시퀀스명</th>
                         <th className="p-2 border">스키마명</th>
                         <th className="p-2 border">테이블명</th>
                         <th className="p-2 border">테이블설명</th>
@@ -304,12 +270,12 @@ const ColumnMetaList = () => {
                 <tbody>
                     {data.map((item) => {
                         return (
-                            <tr key={item.columnMetaSno}>
+                            <tr key={item.seqMetaSno}>
                                 <td className="p-2 border text-center">
-                                    {item.columnMetaSno}
+                                    {item.seqMetaSno}
                                 </td>
                                 <td className="p-2 border text-center">
-                                    {item.columnName}
+                                    {item.seqName}
                                 </td>
                                 <td className="p-2 border text-center">
                                     {item.schemaName}
@@ -333,4 +299,4 @@ const ColumnMetaList = () => {
     );
 };
 
-export default ColumnMetaList;
+export default SeqMetaList;
