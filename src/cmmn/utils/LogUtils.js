@@ -17,8 +17,10 @@ export class LogUtils {
 
             const stack = new Error().stack.split("\n");
             const caller = stack[2]
-                ? stack[2].trim().replace("(", "").replace(")", "") + "\n"
-                : "\n";
+                ? "source " +
+                  stack[2].trim().replace("(", "").replace(")", "") +
+                  "\n\n"
+                : "";
 
             console.log(caller, ...list);
         }
@@ -37,8 +39,10 @@ export class LogUtils {
 
             const stack = new Error().stack.split("\n");
             const caller = stack[3]
-                ? stack[3].trim().replace("(", "").replace(")", "") + "\n"
-                : "\n";
+                ? "source " +
+                  stack[3].trim().replace("(", "").replace(")", "") +
+                  "\n\n"
+                : "";
 
             console.log(caller, ...list);
         }

@@ -13,6 +13,7 @@ export class CmmnUtils {
         if (url.charAt(0) === "/") {
             url = url.substring(1);
         }
+        LogUtils.trace(url);
         return path + url;
     }
 
@@ -40,22 +41,8 @@ export class CmmnUtils {
         }
         return value;
     }
-}
 
-export function camel2Snake(str) {
-    str = str.charAt(0).toLowerCase() + str.substr(1, str.length);
-    return str.replace(/([A-Z])/g, (word) => "_" + word.toLowerCase());
-}
-export function snake2Camel(str) {
-    str = str.toLowerCase();
-    return str.replace(/_./g, (word) => word.charAt(1).toUpperCase());
-}
-export function chanegeCase(str) {
-    if (str === str.toLowerCase()) {
-        return str.toUpperCase();
-    } else if (str === str.toUpperCase()) {
-        return str.toLowerCase();
-    } else {
-        return str;
+    static setTitle(title) {
+        document.title = `${title} | 메타관리시스템`;
     }
 }

@@ -7,11 +7,11 @@ import { useGlboalContext } from "../../../context";
 import PagingCreator from "../../../cmmn/component/PagingCreator";
 
 /**
- * @function TableMetaList
- * @desc 테이블목록 컴포넌트
+ * @function ColumnMetaList
+ * @desc 컬럼목록 컴포넌트
  * @returns
  */
-const TableMetaList = () => {
+const ColumnMetaList = () => {
     /** 전역상태 */
     const { confirmModal } = useGlboalContext();
 
@@ -19,6 +19,9 @@ const TableMetaList = () => {
     const [defaultMap, setDefaultMap] = useState({
         pageNum: "1",
         rowAmountPerPage: "10",
+        columnName: "",
+        columnCamelName: "",
+        columnSnakeName: "",
         schemaName: "",
         tableName: "",
         tableDesc: "",
@@ -27,6 +30,9 @@ const TableMetaList = () => {
     const [searchMap, setSearchMap] = useState({
         pageNum: "1",
         rowAmountPerPage: "10",
+        columnName: "",
+        columnCamelName: "",
+        columnSnakeName: "",
         schemaName: "",
         tableName: "",
         tableDesc: "",
@@ -42,20 +48,20 @@ const TableMetaList = () => {
 
     /** 초기조회 */
     useEffect(() => {
-        CmmnUtils.setTitle("테이블목록");
+        CmmnUtils.setTitle("컬럼목록");
 
         CmmnUtils.axios
-            .get(CmmnUtils.url("METTB01"), CmmnUtils.requestParam(defaultMap))
+            .get(CmmnUtils.url("METCU01"), CmmnUtils.requestParam(defaultMap))
             .then((response) => {
                 if (CmmnUtils.header(response).status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
-                    let tableMetaInfoList = body.tableMetaInfoList;
+                    let columnMetaInfoList = body.columnMetaInfoList;
                     let thePagingCreator = body.pagingCreator;
 
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
-                    setData(tableMetaInfoList);
+                    setData(columnMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
                     AlertUtils.showError(CmmnUtils.header(response).errorMsg);
@@ -72,18 +78,17 @@ const TableMetaList = () => {
      */
     const handleSearch = () => {
         CmmnUtils.axios
-            .get(CmmnUtils.url("METTB01"), CmmnUtils.requestParam(searchMap))
+            .get(CmmnUtils.url("METCU01"), CmmnUtils.requestParam(searchMap))
             .then((response) => {
                 if (CmmnUtils.header(response).status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
-                    let tableMetaInfoList = body.tableMetaInfoList;
+                    let columnMetaInfoList = body.columnMetaInfoList;
                     let thePagingCreator = body.pagingCreator;
 
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
-                    setData(tableMetaInfoList);
-                    LogUtils.debug(tableMetaInfoList);
+                    setData(columnMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
                     alert(CmmnUtils.header(response).errorMsg);
@@ -95,35 +100,6 @@ const TableMetaList = () => {
     };
 
     /**
-     * @function handleDelete
-     * @desc 테이블삭제요청
-     * @param {string} theTableMetaSno
-     */
-    const handleDelete = (theTableMetaSno) => {
-        confirmModal.showConfirm("삭제하시겠습니까?", function () {
-            CmmnUtils.axios
-                .post(
-                    CmmnUtils.url("METTB05"),
-                    CmmnUtils.requestBody({ tableMetaSno: theTableMetaSno })
-                )
-                .then((response) => {
-                    if (CmmnUtils.header(response).status === "0000") {
-                        AlertUtils.showSuccess("삭제되었습니다", function () {
-                            window.location.reload();
-                        });
-                    } else {
-                        AlertUtils.showError(
-                            CmmnUtils.header(response).errorMsg
-                        );
-                    }
-                })
-                .catch((error) => {
-                    LogUtils.debug(error.toString());
-                });
-        });
-    };
-
-    /**
      * @function handleChangeRowAmount
      * @desc 페이지당 행수변경
      * @param {string} theRowAmountPerPage
@@ -131,7 +107,7 @@ const TableMetaList = () => {
     const handleChangeRowAmount = (theRowAmountPerPage) => {
         CmmnUtils.axios
             .get(
-                CmmnUtils.url("METTB01"),
+                CmmnUtils.url("METCU01"),
                 CmmnUtils.requestParam({
                     ...defaultMap,
                     rowAmountPerPage: theRowAmountPerPage,
@@ -141,12 +117,12 @@ const TableMetaList = () => {
                 if (CmmnUtils.header(response).status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
-                    let tableMetaInfoList = body.tableMetaInfoList;
+                    let columnMetaInfoList = body.columnMetaInfoList;
                     let thePagingCreator = body.pagingCreator;
 
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
-                    setData(tableMetaInfoList);
+                    setData(columnMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
                     AlertUtils.showError(CmmnUtils.header(response).errorMsg);
@@ -164,19 +140,19 @@ const TableMetaList = () => {
     const goToPaging = (pageNum) => {
         CmmnUtils.axios
             .get(
-                CmmnUtils.url("METTB01"),
+                CmmnUtils.url("METCU01"),
                 CmmnUtils.requestParam({ ...defaultMap, pageNum: pageNum })
             )
             .then((response) => {
                 if (CmmnUtils.header(response).status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
-                    let tableMetaInfoList = body.tableMetaInfoList;
+                    let columnMetaInfoList = body.columnMetaInfoList;
                     let thePagingCreator = body.pagingCreator;
 
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
-                    setData(tableMetaInfoList);
+                    setData(columnMetaInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
                     AlertUtils.showError(CmmnUtils.header(response).errorMsg);
@@ -189,7 +165,7 @@ const TableMetaList = () => {
 
     return (
         <div>
-            <h5 className="text-xl font-bold">테이블목록</h5>
+            <h5 className="text-xl font-bold">컬럼목록</h5>
             <form>
                 <div className="mb-3">
                     <select
@@ -205,6 +181,51 @@ const TableMetaList = () => {
                     </select>
                 </div>
                 <div className="grid grid-cols-3 gap-4 mb-3">
+                    <div>
+                        <label htmlFor="columnName">컬럼명:</label>
+                        <input
+                            type="text"
+                            id="columnName"
+                            value={searchMap.columnName}
+                            onChange={(e) =>
+                                setSearchMap({
+                                    ...searchMap,
+                                    columnName: e.target.value,
+                                })
+                            }
+                            className="ml-2 p-2 border w-full"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="columnCamelName">컬럼카멜명:</label>
+                        <input
+                            type="text"
+                            id="columnCamelName"
+                            value={searchMap.columnCamelName}
+                            onChange={(e) =>
+                                setSearchMap({
+                                    ...searchMap,
+                                    schemaName: e.target.value,
+                                })
+                            }
+                            className="ml-2 p-2 border w-full"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="columnSnakeName">컬럼스네이크명:</label>
+                        <input
+                            type="text"
+                            id="columnSnakeName"
+                            value={searchMap.columnSnakeName}
+                            onChange={(e) =>
+                                setSearchMap({
+                                    ...searchMap,
+                                    columnSnakeName: e.target.value,
+                                })
+                            }
+                            className="ml-2 p-2 border w-full"
+                        />
+                    </div>
                     <div>
                         <label htmlFor="schemaName">스키마명:</label>
                         <input
@@ -266,24 +287,27 @@ const TableMetaList = () => {
                     <col style={{ width: "15%" }} />
                     <col style={{ width: "25%" }} />
                     <col style={{ width: "15%" }} />
-                    <col style={{ width: "25%" }} />
+                    <col style={{ width: "15%" }} />
                     <col style={{ width: "auto" }} />
                 </colgroup>
                 <thead>
                     <tr className="bg-gray-200">
-                        <th className="p-2 border">테이블메타일련번호</th>
+                        <th className="p-2 border">컬럼메타일련번호</th>
+                        <th className="p-2 border">컬럼명</th>
                         <th className="p-2 border">스키마명</th>
                         <th className="p-2 border">테이블명</th>
                         <th className="p-2 border">테이블설명</th>
-                        <th className="p-2 border">테이블삭제</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map((item) => {
                         return (
-                            <tr key={item.tableMetaSno}>
+                            <tr key={item.columnMetaSno}>
                                 <td className="p-2 border text-center">
-                                    {item.tableMetaSno}
+                                    {item.columnMetaSno}
+                                </td>
+                                <td className="p-2 border text-center">
+                                    {item.columnName}
                                 </td>
                                 <td className="p-2 border text-center">
                                     {item.schemaName}
@@ -293,17 +317,6 @@ const TableMetaList = () => {
                                 </td>
                                 <td className="p-2 border text-center">
                                     {item.tableDesc}
-                                </td>
-                                <td className="p-2 border text-center">
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            handleDelete(item.tableMetaSno)
-                                        }
-                                        className="bg-red-500 text-white px-4 py-2 rounded"
-                                    >
-                                        삭제
-                                    </button>
                                 </td>
                             </tr>
                         );
@@ -318,4 +331,4 @@ const TableMetaList = () => {
     );
 };
 
-export default TableMetaList;
+export default ColumnMetaList;

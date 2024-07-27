@@ -24,18 +24,23 @@ const customStyles = {
 
 // 모달 컴포넌트
 const ConfirmModal = () => {
-    const { confirmModal } = useGlboalContext();
+    const { confirmModal, dimm } = useGlboalContext();
 
     const handleConfirm = () => {
         confirmModal.setIsOpen(false);
+        dimm.setShowDimm(false);
         if (confirmModal.confirmCb) {
             confirmModal.confirmCb();
         }
     };
+    const handleClose = () => {
+        confirmModal.setIsOpen(false);
+        dimm.setShowDimm(false);
+    };
     return (
         <Modal
             isOpen={confirmModal.isOpen}
-            onRequestClose={() => confirmModal.setIsOpen(false)}
+            onRequestClose={handleClose}
             style={customStyles}
             contentLabel="Modal"
             ariaHideApp={false}
@@ -51,7 +56,7 @@ const ConfirmModal = () => {
                 </button>
                 <button
                     className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none"
-                    onClick={() => confirmModal.setIsOpen(false)}
+                    onClick={handleClose}
                 >
                     취소
                 </button>

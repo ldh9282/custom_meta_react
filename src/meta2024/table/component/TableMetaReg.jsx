@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { camel2Snake, CmmnUtils } from "../../../cmmn/utils/CmmnUtils";
+import { CmmnUtils } from "../../../cmmn/utils/CmmnUtils";
 import { nanoid } from "nanoid/non-secure";
 import $ from "jquery";
 import { AlertUtils } from "../../../cmmn/utils/AlertUtils";
 import { useNavigate } from "react-router-dom";
 import { LogUtils } from "../../../cmmn/utils/LogUtils";
 import { useGlboalContext } from "../../../context";
+import { StringUtils } from "../../../cmmn/utils/StringUtils";
 
 const TableMetaReg = () => {
     /** 전역상태 */
@@ -28,6 +29,8 @@ const TableMetaReg = () => {
 
     /** 초기조회 */
     useEffect(() => {
+        CmmnUtils.setTitle("테이블등록");
+
         CmmnUtils.axios
             .get(CmmnUtils.url("METTB02"), CmmnUtils.requestParam({}))
             .then((response) => {
@@ -71,7 +74,7 @@ const TableMetaReg = () => {
         if (fieldName === "columnCamelName") {
             thePkColumns[index] = {
                 ...thePkColumns[index],
-                ["columnSnakeName"]: camel2Snake(value).toUpperCase(),
+                ["columnSnakeName"]: StringUtils.camel2Snake(value),
             };
         }
         setPkColumns(thePkColumns);
@@ -104,7 +107,7 @@ const TableMetaReg = () => {
         if (fieldName === "columnCamelName") {
             theColumns[index] = {
                 ...theColumns[index],
-                ["columnSnakeName"]: camel2Snake(value).toUpperCase(),
+                ["columnSnakeName"]: StringUtils.camel2Snake(value),
             };
         }
         setColumns(theColumns);

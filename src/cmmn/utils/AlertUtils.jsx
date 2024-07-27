@@ -40,7 +40,6 @@ export class AlertUtils {
         );
     }
     static showError(message, callback) {
-        LogUtils.debug(message);
         toast.error(
             <Message>{message?.toString().replace(/\n/g, "<br>")}</Message>,
             {
