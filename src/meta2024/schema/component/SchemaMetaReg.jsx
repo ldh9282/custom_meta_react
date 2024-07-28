@@ -66,26 +66,24 @@ const SchemaMetaReg = () => {
             <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <h5 className="text-xl mb-4">스키마 생성</h5>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
                     <div>
-                        <div>
-                            <label
-                                htmlFor="schemaName"
-                                className="block text-sm font-medium text-gray-700"
-                            >
-                                스키마명
-                            </label>
-                            <input
-                                type="text"
-                                className="form-input mt-1 block w-full p-2.5 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                id="schemaName"
-                                name="schemaName"
-                                value={schemaName}
-                                onChange={(e) =>
-                                    setSchemaName(e.target.value.toUpperCase())
-                                }
-                            />
-                        </div>
+                        <label
+                            htmlFor="schemaName"
+                            className="block text-sm font-medium text-gray-700"
+                        >
+                            스키마명
+                        </label>
+                        <input
+                            type="text"
+                            className="form-input mt-1 block w-full p-2.5 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            id="schemaName"
+                            name="schemaName"
+                            value={schemaName}
+                            onChange={(e) =>
+                                setSchemaName(e.target.value.toUpperCase())
+                            }
+                        />
                     </div>
                 </div>
                 <div className="mt-4 flex justify-end">

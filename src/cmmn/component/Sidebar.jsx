@@ -6,17 +6,6 @@ const Sidebar = () => {
     const location = useLocation();
     const currentUrl = location.pathname;
 
-    const navItems = [
-        { url: "/METSC02", label: "스키마생성", icon: "bi bi-grid" },
-        { url: "/METTB02", label: "테이블생성", icon: "bi bi-grid" },
-        { url: "/METTB01", label: "테이블조회", icon: "bi bi-grid" },
-        { url: "/METCU01", label: "컬럼조회", icon: "bi bi-grid" },
-        { url: "/METSE01", label: "시퀀스조회", icon: "bi bi-grid" },
-        { url: "/METCE01", label: "컬럼영문명", icon: "bi bi-grid" },
-        { url: "/METUT01", label: "sql2ExcelConverter", icon: "bi bi-grid" },
-        { url: "/METUT02", label: "camel2Snake", icon: "bi bi-grid" },
-    ];
-
     return (
         <aside className="flex flex-col h-screen bg-gray-800 text-white w-64 overflow-hidden">
             <div className="flex-1 overflow-y-auto">

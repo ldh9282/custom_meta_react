@@ -24,3 +24,9 @@
     z-index: 10;
 }
 /* End 딤 처리용  */
+
+/* Start 테이블 행 일련번호 밑줄처리  */
+.table-row:hover .rownum {
+    text-decoration: underline;
+}
+/* End 테이블 행 일련번호 밑줄처리  */

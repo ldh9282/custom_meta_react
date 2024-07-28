@@ -15,6 +15,7 @@ import ColumnMetaList from "./meta2024/column/component/ColumnMetaList";
 import Dimm from "./cmmn/component/Dimm";
 import SeqMetaList from "./meta2024/seq/component/seqMetaList";
 import SchemaMetaReg from "./meta2024/schema/component/SchemaMetaReg";
+import ColumnMetaDetail from "./meta2024/column/component/ColumnMetaDetail";
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                         <Route path="/METTB02" element={<TableMetaReg />} />
                         <Route path="/METTB01" element={<TableMetaList />} />
                         <Route path="/METCU01" element={<ColumnMetaList />} />
+                        <Route path="/METCU02" element={<ColumnMetaDetail />} />
                         <Route path="/METSE01" element={<SeqMetaList />} />
                     </Routes>
                 </Layout>

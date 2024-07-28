@@ -187,7 +187,7 @@ const TableMetaReg = () => {
             <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <h5 className="text-xl mb-4">테이블 생성</h5>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
                     <div>
                         <label className="block text-sm font-medium text-gray-700">
                             스키마명

@@ -173,6 +173,12 @@ const ColumnMetaList = () => {
             });
     };
 
+    const handleDetail = (tableMetaSno, columnMetaSno) => {
+        navigate(
+            `/METCU02?tableMetaSno=${tableMetaSno}&columnMetaSno=${columnMetaSno}`
+        );
+    };
+
     return (
         <div>
             <h5 className="text-xl font-bold">컬럼목록</h5>
@@ -317,6 +323,7 @@ const ColumnMetaList = () => {
                     <col style={{ width: "25%" }} />
                     <col style={{ width: "15%" }} />
                     <col style={{ width: "15%" }} />
+                    <col style={{ width: "15%" }} />
                     <col style={{ width: "auto" }} />
                 </colgroup>
                 <thead>
@@ -326,6 +333,7 @@ const ColumnMetaList = () => {
                         <th className="p-2 border">스키마명</th>
                         <th className="p-2 border">테이블명</th>
                         <th className="p-2 border">테이블설명</th>
+                        <th className="p-2 border">컬럼상세</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -346,6 +354,20 @@ const ColumnMetaList = () => {
                                 </td>
                                 <td className="p-2 border text-center">
                                     {item.tableDesc}
+                                </td>
+                                <td className="p-2 border text-center">
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            handleDetail(
+                                                item.tableMetaSno,
+                                                item.columnMetaSno
+                                            )
+                                        }
+                                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                                    >
+                                        상세
+                                    </button>
                                 </td>
                             </tr>
                         );
