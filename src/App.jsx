@@ -16,6 +16,8 @@ import Dimm from "./cmmn/component/Dimm";
 import SeqMetaList from "./meta2024/seq/component/seqMetaList";
 import SchemaMetaReg from "./meta2024/schema/component/SchemaMetaReg";
 import ColumnMetaDetail from "./meta2024/column/component/ColumnMetaDetail";
+import DomainReg from "./meta2024/domain/component/domainReg";
+import DomainList from "./meta2024/domain/component/DomainList";
 
 function App() {
     return (
@@ -24,6 +26,10 @@ function App() {
                 <Layout>
                     <Routes>
                         <Route path="/" element={<Navigate to="/METTB02" />} />
+                        <Route path="/METDM01" element={<DomainReg />} />
+                        <Route path="/METDM03" element={<DomainList />} />
+                        <Route path="/METTM01" element={<SchemaMetaReg />} />
+                        <Route path="/METTM03" element={<SchemaMetaReg />} />
                         <Route path="/METSC02" element={<SchemaMetaReg />} />
                         <Route path="/METTB02" element={<TableMetaReg />} />
                         <Route path="/METTB01" element={<TableMetaList />} />

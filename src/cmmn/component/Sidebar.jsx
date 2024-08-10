@@ -10,6 +10,56 @@ const Sidebar = () => {
         <aside className="flex flex-col h-screen bg-gray-800 text-white w-64 overflow-hidden">
             <div className="flex-1 overflow-y-auto">
                 <div className="text-left text-2xl font-semibold ml-4 mb-4 mt-6">
+                    도메인
+                </div>
+                <ul className="space-y-1">
+                    <li className="nav-item">
+                        <Link
+                            to="/METDM01"
+                            className={`nav-link block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 ${
+                                currentUrl === "/METDM01" ? "bg-gray-700" : ""
+                            }`}
+                        >
+                            <span className="ml-2">도메인생성</span>
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link
+                            to="/METDM03"
+                            className={`nav-link block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 ${
+                                currentUrl === "/METDM03" ? "bg-gray-700" : ""
+                            }`}
+                        >
+                            <span className="ml-2">도메인조회</span>
+                        </Link>
+                    </li>
+                </ul>
+                <div className="text-left text-2xl font-semibold ml-4 mb-4 mt-6">
+                    용어
+                </div>
+                <ul className="space-y-1">
+                    <li className="nav-item">
+                        <Link
+                            to="/METTM01"
+                            className={`nav-link block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 ${
+                                currentUrl === "/METTM01" ? "bg-gray-700" : ""
+                            }`}
+                        >
+                            <span className="ml-2">용어생성</span>
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link
+                            to="/METTM03"
+                            className={`nav-link block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 ${
+                                currentUrl === "/METTM03" ? "bg-gray-700" : ""
+                            }`}
+                        >
+                            <span className="ml-2">용어조회</span>
+                        </Link>
+                    </li>
+                </ul>
+                <div className="text-left text-2xl font-semibold ml-4 mb-4 mt-6">
                     스키마
                 </div>
                 <ul className="space-y-1">
