@@ -16,6 +16,10 @@ export class CmmnUtils {
         LogUtils.trace(`[${url}]`);
         return path + url;
     }
+    static outUrl(url) {
+        LogUtils.trace(`[${url}]`);
+        return url;
+    }
 
     static requestParam(data) {
         LogUtils.trace("[@RequestParam]", data);

@@ -7,11 +7,11 @@ import { useGlboalContext } from "../../../context";
 import PagingCreator from "../../../cmmn/component/PagingCreator";
 
 /**
- * @function ColumnMetaList
- * @desc 컬럼목록 컴포넌트
+ * @function TermList
+ * @desc 용어목록 컴포넌트
  * @returns
  */
-const ColumnMetaList = () => {
+const TermList = () => {
     /** 전역상태 */
     const { confirmModal } = useGlboalContext();
 
@@ -19,25 +19,19 @@ const ColumnMetaList = () => {
     const [defaultMap, setDefaultMap] = useState({
         pageNum: "1",
         rowAmountPerPage: "10",
-        columnMetaSno: "",
-        columnName: "",
-        columnCamelName: "",
-        columnSnakeName: "",
-        schemaName: "",
-        tableName: "",
-        tableDesc: "",
+        termSno: "",
+        termName: "",
+        termCamelName: "",
+        termSnakeName: "",
     });
     /** searchMap */
     const [searchMap, setSearchMap] = useState({
         pageNum: "1",
         rowAmountPerPage: "10",
-        columnMetaSno: "",
-        columnName: "",
-        columnCamelName: "",
-        columnSnakeName: "",
-        schemaName: "",
-        tableName: "",
-        tableDesc: "",
+        termSno: "",
+        termName: "",
+        termCamelName: "",
+        termSnakeName: "",
     });
 
     /** data */
@@ -50,21 +44,21 @@ const ColumnMetaList = () => {
 
     /** 초기조회 */
     useEffect(() => {
-        CmmnUtils.setTitle("컬럼 조회");
+        CmmnUtils.setTitle("용어 조회");
 
         CmmnUtils.axios
-            .get(CmmnUtils.url("METCU01"), CmmnUtils.requestParam(defaultMap))
+            .get(CmmnUtils.url("METTM03"), CmmnUtils.requestParam(defaultMap))
             .then((response) => {
                 let header = CmmnUtils.header(response);
                 if (header.status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
-                    let columnMetaInfoList = body.columnMetaInfoList;
+                    let termInfoList = body.termInfoList;
                     let thePagingCreator = body.pagingCreator;
 
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
-                    setData(columnMetaInfoList);
+                    setData(termInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
                     AlertUtils.showError(header.errorMsg);
@@ -82,7 +76,7 @@ const ColumnMetaList = () => {
     const handleSearch = () => {
         CmmnUtils.axios
             .get(
-                CmmnUtils.url("METCU01"),
+                CmmnUtils.url("METTM03"),
                 CmmnUtils.requestParam({ ...searchMap, pageNum: "1" })
             )
             .then((response) => {
@@ -90,12 +84,12 @@ const ColumnMetaList = () => {
                 if (header.status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
-                    let columnMetaInfoList = body.columnMetaInfoList;
+                    let termInfoList = body.termInfoList;
                     let thePagingCreator = body.pagingCreator;
 
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
-                    setData(columnMetaInfoList);
+                    setData(termInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
                     AlertUtils.showError(header.errorMsg);
@@ -107,6 +101,37 @@ const ColumnMetaList = () => {
     };
 
     /**
+     * @function handleDelete
+     * @desc 용어삭제요청
+     * @param {string} theDomainSno
+     */
+    const handleDelete = (theDomainSno, theTermSno) => {
+        confirmModal.showConfirm("삭제하시겠습니까?", function () {
+            CmmnUtils.axios
+                .post(
+                    CmmnUtils.url("METTM05"),
+                    CmmnUtils.requestBody({
+                        domainSno: theDomainSno,
+                        termSno: theTermSno,
+                    })
+                )
+                .then((response) => {
+                    let header = CmmnUtils.header(response);
+                    if (header.status === "0000") {
+                        AlertUtils.showSuccess("삭제되었습니다", function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        AlertUtils.showError(header.errorMsg);
+                    }
+                })
+                .catch((error) => {
+                    LogUtils.debug(error.toString());
+                });
+        });
+    };
+
+    /**
      * @function handleChangeRowAmount
      * @desc 페이지당 행수변경
      * @param {string} theRowAmountPerPage
@@ -114,7 +139,7 @@ const ColumnMetaList = () => {
     const handleChangeRowAmount = (theRowAmountPerPage) => {
         CmmnUtils.axios
             .get(
-                CmmnUtils.url("METCU01"),
+                CmmnUtils.url("METTM03"),
                 CmmnUtils.requestParam({
                     ...defaultMap,
                     pageNum: "1",
@@ -126,12 +151,12 @@ const ColumnMetaList = () => {
                 if (header.status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
-                    let columnMetaInfoList = body.columnMetaInfoList;
+                    let termInfoList = body.termInfoList;
                     let thePagingCreator = body.pagingCreator;
 
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
-                    setData(columnMetaInfoList);
+                    setData(termInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
                     AlertUtils.showError(header.errorMsg);
@@ -149,20 +174,21 @@ const ColumnMetaList = () => {
     const goToPaging = (pageNum) => {
         CmmnUtils.axios
             .get(
-                CmmnUtils.url("METCU01"),
+                CmmnUtils.url("METTM03"),
                 CmmnUtils.requestParam({ ...defaultMap, pageNum: pageNum })
             )
             .then((response) => {
                 let header = CmmnUtils.header(response);
+
                 if (header.status === "0000") {
                     let body = CmmnUtils.body(response);
                     let requestMap = body.requestMap;
-                    let columnMetaInfoList = body.columnMetaInfoList;
+                    let termInfoList = body.termInfoList;
                     let thePagingCreator = body.pagingCreator;
 
                     setDefaultMap(requestMap);
                     setSearchMap(requestMap);
-                    setData(columnMetaInfoList);
+                    setData(termInfoList);
                     setPagingCreator(thePagingCreator);
                 } else {
                     AlertUtils.showError(header.errorMsg);
@@ -173,15 +199,9 @@ const ColumnMetaList = () => {
             });
     };
 
-    const handleDetail = (tableMetaSno, columnMetaSno) => {
-        navigate(
-            `/METCU02?tableMetaSno=${tableMetaSno}&columnMetaSno=${columnMetaSno}`
-        );
-    };
-
     return (
         <div>
-            <h5 className="text-xl font-bold">컬럼 조회</h5>
+            <h5 className="text-xl font-bold">용어 조회</h5>
             <form>
                 <div className="mb-3">
                     <select
@@ -198,15 +218,15 @@ const ColumnMetaList = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-4 mb-3">
                     <div>
-                        <label htmlFor="columnMetaSno">컬럼메타일련번호:</label>
+                        <label htmlFor="termSno">용어일련번호:</label>
                         <input
                             type="text"
-                            id="columnMetaSno"
-                            value={searchMap.columnMetaSno}
+                            id="termSno"
+                            value={searchMap.termSno}
                             onChange={(e) =>
                                 setSearchMap({
                                     ...searchMap,
-                                    columnMetaSno: e.target.value,
+                                    termSno: e.target.value,
                                 })
                             }
                             className="ml-2 p-2 border w-full"
@@ -215,92 +235,45 @@ const ColumnMetaList = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-4 mb-3">
                     <div>
-                        <label htmlFor="columnName">컬럼명:</label>
+                        <label htmlFor="termName">용어명:</label>
                         <input
                             type="text"
-                            id="columnName"
-                            value={searchMap.columnName}
+                            id="termName"
+                            value={searchMap.termName}
                             onChange={(e) =>
                                 setSearchMap({
                                     ...searchMap,
-                                    columnName: e.target.value,
+                                    termName: e.target.value,
                                 })
                             }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
                     <div>
-                        <label htmlFor="columnCamelName">컬럼카멜명:</label>
+                        <label htmlFor="termCamelName">용어카멜명:</label>
                         <input
                             type="text"
-                            id="columnCamelName"
-                            value={searchMap.columnCamelName}
+                            id="termCamelName"
+                            value={searchMap.termCamelName}
                             onChange={(e) =>
                                 setSearchMap({
                                     ...searchMap,
-                                    schemaName: e.target.value,
+                                    termCamelName: e.target.value,
                                 })
                             }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
                     <div>
-                        <label htmlFor="columnSnakeName">컬럼스네이크명:</label>
+                        <label htmlFor="termSnakeName">용어스네이크명:</label>
                         <input
                             type="text"
-                            id="columnSnakeName"
-                            value={searchMap.columnSnakeName}
+                            id="termSnakeName"
+                            value={searchMap.termSnakeName}
                             onChange={(e) =>
                                 setSearchMap({
                                     ...searchMap,
-                                    columnSnakeName: e.target.value,
-                                })
-                            }
-                            className="ml-2 p-2 border w-full"
-                        />
-                    </div>
-                </div>
-                <div className="grid grid-cols-3 gap-4 mb-3">
-                    <div>
-                        <label htmlFor="schemaName">스키마명:</label>
-                        <input
-                            type="text"
-                            id="schemaName"
-                            value={searchMap.schemaName}
-                            onChange={(e) =>
-                                setSearchMap({
-                                    ...searchMap,
-                                    schemaName: e.target.value,
-                                })
-                            }
-                            className="ml-2 p-2 border w-full"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="tableName">테이블명:</label>
-                        <input
-                            type="text"
-                            id="tableName"
-                            value={searchMap.tableName}
-                            onChange={(e) =>
-                                setSearchMap({
-                                    ...searchMap,
-                                    tableName: e.target.value,
-                                })
-                            }
-                            className="ml-2 p-2 border w-full"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="tableDesc">테이블설명:</label>
-                        <input
-                            type="text"
-                            id="tableDesc"
-                            value={searchMap.tableDesc}
-                            onChange={(e) =>
-                                setSearchMap({
-                                    ...searchMap,
-                                    tableDesc: e.target.value,
+                                    termSnakeName: e.target.value,
                                 })
                             }
                             className="ml-2 p-2 border w-full"
@@ -320,7 +293,8 @@ const ColumnMetaList = () => {
             <table className="w-full bg-white border mt-3">
                 <colgroup>
                     <col style={{ width: "15%" }} />
-                    <col style={{ width: "25%" }} />
+                    <col style={{ width: "15%" }} />
+                    <col style={{ width: "15%" }} />
                     <col style={{ width: "15%" }} />
                     <col style={{ width: "15%" }} />
                     <col style={{ width: "15%" }} />
@@ -328,45 +302,49 @@ const ColumnMetaList = () => {
                 </colgroup>
                 <thead>
                     <tr className="bg-gray-200">
-                        <th className="p-2 border">컬럼메타일련번호</th>
-                        <th className="p-2 border">컬럼명</th>
-                        <th className="p-2 border">스키마명</th>
-                        <th className="p-2 border">테이블명</th>
-                        <th className="p-2 border">테이블설명</th>
-                        <th className="p-2 border">컬럼상세</th>
+                        <th className="p-2 border">용어일련번호</th>
+                        <th className="p-2 border">용어명</th>
+                        <th className="p-2 border">용어카멜명</th>
+                        <th className="p-2 border">용어스네이크명</th>
+                        <th className="p-2 border">도메인명</th>
+                        <th className="p-2 border">도메인타입</th>
+                        <th className="p-2 border">용어삭제</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map((item) => {
                         return (
-                            <tr key={item.columnMetaSno}>
+                            <tr key={item.termSno}>
                                 <td className="p-2 border text-center">
-                                    {item.columnMetaSno}
+                                    {item.termSno}
                                 </td>
                                 <td className="p-2 border text-center">
-                                    {item.columnName}
+                                    {item.termName}
                                 </td>
                                 <td className="p-2 border text-center">
-                                    {item.schemaName}
+                                    {item.termCamelName}
                                 </td>
                                 <td className="p-2 border text-center">
-                                    {item.tableName}
+                                    {item.termSnakeName}
                                 </td>
                                 <td className="p-2 border text-center">
-                                    {item.tableDesc}
+                                    {item.domainName}
+                                </td>
+                                <td className="p-2 border text-center">
+                                    {item.domainType}
                                 </td>
                                 <td className="p-2 border text-center">
                                     <button
                                         type="button"
                                         onClick={() =>
-                                            handleDetail(
-                                                item.tableMetaSno,
-                                                item.columnMetaSno
+                                            handleDelete(
+                                                item.domainSno,
+                                                item.termSno
                                             )
                                         }
-                                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                                        className="bg-red-500 text-white px-4 py-2 rounded"
                                     >
-                                        상세
+                                        삭제
                                     </button>
                                 </td>
                             </tr>
@@ -382,4 +360,4 @@ const ColumnMetaList = () => {
     );
 };
 
-export default ColumnMetaList;
+export default TermList;

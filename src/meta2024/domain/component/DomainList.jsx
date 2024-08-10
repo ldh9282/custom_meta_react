@@ -42,7 +42,7 @@ const DomainList = () => {
 
     /** 초기조회 */
     useEffect(() => {
-        CmmnUtils.setTitle("도메인목록");
+        CmmnUtils.setTitle("도메인 조회");
 
         CmmnUtils.axios
             .get(CmmnUtils.url("METDM03"), CmmnUtils.requestParam(defaultMap))
@@ -196,7 +196,7 @@ const DomainList = () => {
 
     return (
         <div>
-            <h5 className="text-xl font-bold">도메인목록</h5>
+            <h5 className="text-xl font-bold">도메인 조회</h5>
             <form>
                 <div className="mb-3">
                     <select

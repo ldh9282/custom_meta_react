@@ -16,18 +16,17 @@ const PagingCreator = ({ pagingCreator, goToPaging }) => {
                         {pagingCreator.prev && (
                             <>
                                 <li className="page-item">
-                                    <a
+                                    <button
                                         className="page-link px-3 py-1 border rounded hover:bg-gray-200"
                                         href="#"
                                         onClick={() => goToPaging(1)}
                                     >
                                         처음
-                                    </a>
+                                    </button>
                                 </li>
                                 <li className="page-item">
-                                    <a
+                                    <button
                                         className="page-link px-3 py-1 border rounded hover:bg-gray-200"
-                                        href="#"
                                         onClick={() =>
                                             goToPaging(
                                                 pagingCreator.startPagingNum - 1
@@ -35,31 +34,29 @@ const PagingCreator = ({ pagingCreator, goToPaging }) => {
                                         }
                                     >
                                         이전
-                                    </a>
+                                    </button>
                                 </li>
                             </>
                         )}
                         {pageNumList.map((thePageNum) => (
                             <li className="page-item" key={thePageNum}>
-                                <a
+                                <button
                                     className={`page-link px-3 py-1 border rounded hover:bg-gray-200 ${
                                         thePageNum === pagingCreator.pageNum
                                             ? "bg-blue-500 text-white"
                                             : ""
                                     }`}
-                                    href="#"
                                     onClick={() => goToPaging(thePageNum)}
                                 >
                                     {thePageNum}
-                                </a>
+                                </button>
                             </li>
                         ))}
                         {pagingCreator.next && (
                             <>
                                 <li className="page-item">
-                                    <a
+                                    <button
                                         className="page-link px-3 py-1 border rounded hover:bg-gray-200"
-                                        href="#"
                                         onClick={() =>
                                             goToPaging(
                                                 pagingCreator.endPagingNum + 1
@@ -67,12 +64,11 @@ const PagingCreator = ({ pagingCreator, goToPaging }) => {
                                         }
                                     >
                                         다음
-                                    </a>
+                                    </button>
                                 </li>
                                 <li className="page-item">
-                                    <a
+                                    <button
                                         className="page-link px-3 py-1 border rounded hover:bg-gray-200"
-                                        href="#"
                                         onClick={() =>
                                             goToPaging(
                                                 pagingCreator.lastPageNum
@@ -80,7 +76,7 @@ const PagingCreator = ({ pagingCreator, goToPaging }) => {
                                         }
                                     >
                                         끝
-                                    </a>
+                                    </button>
                                 </li>
                             </>
                         )}

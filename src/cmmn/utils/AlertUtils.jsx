@@ -32,7 +32,7 @@ export class AlertUtils {
     }
 
     static showInfo(message, callback) {
-        toast.success(
+        toast.info(
             <Message>{message?.toString().replace(/\n/g, "<br>")}</Message>,
             {
                 onClose: callback,

@@ -44,7 +44,7 @@ const TableMetaList = () => {
 
     /** 초기조회 */
     useEffect(() => {
-        CmmnUtils.setTitle("테이블목록");
+        CmmnUtils.setTitle("테이블 조회");
 
         CmmnUtils.axios
             .get(CmmnUtils.url("METTB01"), CmmnUtils.requestParam(defaultMap))
@@ -197,7 +197,7 @@ const TableMetaList = () => {
 
     return (
         <div>
-            <h5 className="text-xl font-bold">테이블목록</h5>
+            <h5 className="text-xl font-bold">테이블 조회</h5>
             <form>
                 <div className="mb-3">
                     <select
