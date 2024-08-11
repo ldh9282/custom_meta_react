@@ -171,8 +171,8 @@ const SeqMetaList = () => {
     };
 
     return (
-        <div>
-            <h5 className="text-xl font-bold">시퀀스 조회</h5>
+        <div className="text-base font-bold">
+            <h5>시퀀스 조회</h5>
             <form>
                 <div className="mb-3">
                     <select

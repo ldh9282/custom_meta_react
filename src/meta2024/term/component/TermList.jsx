@@ -200,8 +200,8 @@ const TermList = () => {
     };
 
     return (
-        <div>
-            <h5 className="text-xl font-bold">용어 조회</h5>
+        <div className="text-base font-bold">
+            <h5>용어 조회</h5>
             <form>
                 <div className="mb-3">
                     <select

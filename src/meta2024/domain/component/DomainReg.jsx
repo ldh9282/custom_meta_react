@@ -16,6 +16,7 @@ const DomainReg = () => {
         domainType: "",
     });
 
+    /** 도메인검색정보목록 */
     const [domainScInfoList, setDomainScInfoList] = useState([]);
 
     const navigate = useNavigate();

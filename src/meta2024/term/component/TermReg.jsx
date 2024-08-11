@@ -12,6 +12,7 @@ const TermReg = () => {
     /** 전역상태 */
     const { confirmModal } = useGlboalContext();
 
+    /** 검색모달맵 */
     const [searchModalMap, setSearchModalMap] = useState({
         isOpen: false,
         searchInput: "",
@@ -69,10 +70,19 @@ const TermReg = () => {
         });
     };
 
+    /**
+     * @function handleResetDomain
+     * @desc 도메인리셋
+     */
     const handleResetDomain = () => {
         setRegMap({ ...regMap, domainSno: "", domainName: "" });
         setSearchModalMap({ ...searchModalMap, selectedItem: {} });
     };
+
+    /**
+     * @function handleSearchModal
+     * @desc 도메인검색
+     */
     const handleSearchModal = () => {
         CmmnUtils.axios
             .post(
@@ -106,14 +116,25 @@ const TermReg = () => {
                 LogUtils.debug(error.toString());
             });
     };
+
+    /**
+     * @function handleOpenModal
+     * @desc 검색모달열림
+     */
     const handleOpenModal = () => {
         setSearchModalMap({
             ...searchModalMap,
             isOpen: true,
             searchInput: "",
             searchResults: [],
+            selectedItem: {},
         });
     };
+
+    /**
+     * @function handleConfirmModal
+     * @desc 검색모달확인
+     */
     const handleConfirmModal = () => {
         setSearchModalMap({
             ...searchModalMap,
@@ -127,6 +148,11 @@ const TermReg = () => {
             });
         }
     };
+
+    /**
+     * @function handleCloseModal
+     * @desc 검색모달닫힘
+     */
     const handleCloseModal = () => {
         setSearchModalMap({
             ...searchModalMap,

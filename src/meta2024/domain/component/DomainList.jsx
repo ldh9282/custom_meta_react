@@ -195,8 +195,8 @@ const DomainList = () => {
     };
 
     return (
-        <div>
-            <h5 className="text-xl font-bold">도메인 조회</h5>
+        <div className="text-base font-bold">
+            <h5>도메인 조회</h5>
             <form>
                 <div className="mb-3">
                     <select

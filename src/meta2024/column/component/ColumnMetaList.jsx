@@ -180,8 +180,8 @@ const ColumnMetaList = () => {
     };
 
     return (
-        <div>
-            <h5 className="text-xl font-bold">컬럼 조회</h5>
+        <div className="text-base font-bold">
+            <h5>컬럼 조회</h5>
             <form>
                 <div className="mb-3">
                     <select
@@ -364,7 +364,7 @@ const ColumnMetaList = () => {
                                                 item.columnMetaSno
                                             )
                                         }
-                                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                                        className="bg-emerald-600 text-white px-4 py-2 rounded"
                                     >
                                         상세
                                     </button>

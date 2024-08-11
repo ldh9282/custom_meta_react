@@ -9,7 +9,7 @@ const Sidebar = () => {
     return (
         <aside className="flex flex-col h-screen bg-gray-800 text-white w-64 overflow-hidden">
             <div className="flex-1 overflow-y-auto">
-                <div className="text-left text-2xl font-semibold ml-4 mb-4 mt-6">
+                <div className="text-left text-lg font-bold ml-4 mb-4 mt-6">
                     도메인
                 </div>
                 <ul className="space-y-1">
@@ -34,7 +34,7 @@ const Sidebar = () => {
                         </Link>
                     </li>
                 </ul>
-                <div className="text-left text-2xl font-semibold ml-4 mb-4 mt-6">
+                <div className="text-left text-lg font-bold ml-4 mb-4 mt-6">
                     용어
                 </div>
                 <ul className="space-y-1">
@@ -59,7 +59,7 @@ const Sidebar = () => {
                         </Link>
                     </li>
                 </ul>
-                <div className="text-left text-2xl font-semibold ml-4 mb-4 mt-6">
+                <div className="text-left text-lg font-bold ml-4 mb-4 mt-6">
                     스키마
                 </div>
                 <ul className="space-y-1">
@@ -84,7 +84,7 @@ const Sidebar = () => {
                         </Link>
                     </li>
                 </ul>
-                <div className="text-left text-2xl font-semibold ml-4 mb-4 mt-6">
+                <div className="text-left text-lg font-bold ml-4 mb-4 mt-6">
                     DB오브젝트관리
                 </div>
                 <ul className="space-y-1">
