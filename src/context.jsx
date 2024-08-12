@@ -18,6 +18,8 @@ export const AppProvider = ({ children }) => {
     const [confirmCb, setConfirmCb] = useState(() => () => {});
     const [showDimm, setShowDimm] = useState(false);
 
+    const [isLogined, setIsLogined] = useState(false);
+
     /**
      * @object globalState
      * @desc 전역상태

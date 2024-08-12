@@ -20,6 +20,8 @@ import DomainReg from "./meta2024/domain/component/domainReg";
 import DomainList from "./meta2024/domain/component/DomainList";
 import TermReg from "./meta2024/term/component/TermReg";
 import TermList from "./meta2024/term/component/TermList";
+import Login2 from "./login/component/Login2";
+import PrivateRoute from "./cmmn/component/PrivateRoute";
 
 function App() {
     return (
@@ -28,16 +30,49 @@ function App() {
                 <Layout>
                     <Routes>
                         <Route path="/" element={<Navigate to="/METTB02" />} />
-                        <Route path="/METDM01" element={<DomainReg />} />
-                        <Route path="/METDM03" element={<DomainList />} />
-                        <Route path="/METTM01" element={<TermReg />} />
-                        <Route path="/METTM03" element={<TermList />} />
-                        <Route path="/METSC02" element={<SchemaMetaReg />} />
-                        <Route path="/METTB02" element={<TableMetaReg />} />
-                        <Route path="/METTB01" element={<TableMetaList />} />
-                        <Route path="/METCU01" element={<ColumnMetaList />} />
-                        <Route path="/METCU02" element={<ColumnMetaDetail />} />
-                        <Route path="/METSE01" element={<SeqMetaList />} />
+                        <Route path="/METLG04" element={<Login2 />} />
+                        <Route
+                            path="/METDM01"
+                            element={<PrivateRoute element={DomainReg} />}
+                        />
+                        <Route
+                            path="/METDM03"
+                            element={<PrivateRoute element={DomainList} />}
+                        />
+                        <Route
+                            path="/METTM01"
+                            element={<PrivateRoute element={TermReg} />}
+                        />
+                        <Route
+                            path="/METTM03"
+                            element={<PrivateRoute element={TermList} />}
+                        />
+                        <Route
+                            path="/METSC02"
+                            element={<PrivateRoute element={SchemaMetaReg} />}
+                        />
+                        <Route
+                            path="/METTB02"
+                            element={<PrivateRoute element={TableMetaReg} />}
+                        />
+                        <Route
+                            path="/METTB01"
+                            element={<PrivateRoute element={TableMetaList} />}
+                        />
+                        <Route
+                            path="/METCU01"
+                            element={<PrivateRoute element={ColumnMetaList} />}
+                        />
+                        <Route
+                            path="/METCU02"
+                            element={
+                                <PrivateRoute element={ColumnMetaDetail} />
+                            }
+                        />
+                        <Route
+                            path="/METSE01"
+                            element={<PrivateRoute element={SeqMetaList} />}
+                        />
                     </Routes>
                 </Layout>
             </Router>

@@ -6,8 +6,12 @@ const path = "http://localhost:8080/v2/";
 export class CmmnUtils {
     static axios = axios.create({
         headers: {
-            "X-Requested-With": "XMLHttpRequest",
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            "Content-Type": "application/json",
         },
+    });
+    static axios2 = axios.create({
+        headers: { "Content-Type": "application/json" },
     });
     static url(url) {
         if (url.charAt(0) === "/") {
