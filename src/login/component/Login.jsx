@@ -3,10 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { CmmnUtils } from "../../cmmn/utils/CmmnUtils";
 import { LogUtils } from "../../cmmn/utils/LogUtils";
 import { AlertUtils } from "../../cmmn/utils/AlertUtils";
-import { useGlboalContext } from "../../context";
 import { AuthUtils } from "../../cmmn/utils/AuthUtils";
 
-const Login2 = () => {
+const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -39,10 +38,12 @@ const Login2 = () => {
                         () => (window.location.href = "/METTB02")
                     );
                 } else {
+                    AuthUtils.removeAuthItems();
                     AlertUtils.showError(header.errorMsg);
                 }
             })
             .catch((error) => {
+                AuthUtils.removeAuthItems();
                 LogUtils.debug(error.toString());
             });
     };
@@ -138,4 +139,4 @@ const Login2 = () => {
     );
 };
 
-export default Login2;
+export default Login;

@@ -7,7 +7,7 @@ import { AuthUtils } from "../utils/AuthUtils";
 const PrivateRoute = ({ element: Element, ...rest }) => {
     // 초기 조회
     useEffect(() => {
-        if (localStorage.getItem("jwtToken")) {
+        if (AuthUtils.isAuthenticated()) {
             CmmnUtils.authAxios
                 .get(CmmnUtils.url("METLG06"), CmmnUtils.requestParam({}))
                 .then((response) => {
@@ -29,7 +29,7 @@ const PrivateRoute = ({ element: Element, ...rest }) => {
                     LogUtils.debug(error.toString());
                 });
         }
-    });
+    }, []);
 
     if (AuthUtils.isAuthenticated()) {
         return <Element {...rest} />;

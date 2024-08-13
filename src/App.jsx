@@ -20,8 +20,8 @@ import DomainReg from "./meta2024/domain/component/domainReg";
 import DomainList from "./meta2024/domain/component/DomainList";
 import TermReg from "./meta2024/term/component/TermReg";
 import TermList from "./meta2024/term/component/TermList";
-import Login2 from "./login/component/Login2";
 import PrivateRoute from "./cmmn/component/PrivateRoute";
+import Login from "./login/component/Login";
 
 function App() {
     return (
@@ -30,7 +30,7 @@ function App() {
                 <Layout>
                     <Routes>
                         <Route path="/" element={<Navigate to="/METTB02" />} />
-                        <Route path="/METLG04" element={<Login2 />} />
+                        <Route path="/METLG04" element={<Login />} />
                         <Route
                             path="/METDM01"
                             element={<PrivateRoute element={DomainReg} />}
