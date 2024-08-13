@@ -4,6 +4,7 @@ import { CmmnUtils } from "../../cmmn/utils/CmmnUtils";
 import { LogUtils } from "../../cmmn/utils/LogUtils";
 import { AlertUtils } from "../../cmmn/utils/AlertUtils";
 import { useGlboalContext } from "../../context";
+import { AuthUtils } from "../../cmmn/utils/AuthUtils";
 
 const Login2 = () => {
     const [username, setUsername] = useState("");
@@ -19,7 +20,7 @@ const Login2 = () => {
             username: username,
             password: password,
         };
-        CmmnUtils.axios2
+        CmmnUtils.axios
             .post(
                 CmmnUtils.url("METLG05"),
                 CmmnUtils.requestBody({
@@ -30,6 +31,7 @@ const Login2 = () => {
                 let header = CmmnUtils.header(response);
                 if (header.status === "0000") {
                     let body = CmmnUtils.body(response);
+                    AuthUtils.setAuthItems(header);
                     localStorage.setItem("jwtToken", body.jwtToken);
 
                     AlertUtils.showInfo(
