@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useGlboalContext } from "../../../context";
+import { useGlobalContext } from "../../../context";
 import $ from "jquery";
 import { useEffect, useState } from "react";
 import { CmmnUtils } from "../../../cmmn/utils/CmmnUtils";
@@ -10,7 +10,7 @@ import { StringUtils } from "../../../cmmn/utils/StringUtils";
 
 const TermReg = () => {
     /** 전역상태 */
-    const { confirmModal } = useGlboalContext();
+    const { confirmModal } = useGlobalContext();
 
     /** 검색모달맵 */
     const [searchModalMap, setSearchModalMap] = useState({

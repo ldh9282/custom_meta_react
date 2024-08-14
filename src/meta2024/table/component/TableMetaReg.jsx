@@ -5,13 +5,13 @@ import $ from "jquery";
 import { AlertUtils } from "../../../cmmn/utils/AlertUtils";
 import { useNavigate } from "react-router-dom";
 import { LogUtils } from "../../../cmmn/utils/LogUtils";
-import { useGlboalContext } from "../../../context";
+import { useGlobalContext } from "../../../context";
 import { StringUtils } from "../../../cmmn/utils/StringUtils";
 import { RefreshCcw, Search } from "lucide-react";
 
 const TableMetaReg = () => {
     /** 전역상태 */
-    const { confirmModal } = useGlboalContext();
+    const { confirmModal } = useGlobalContext();
 
     /** 스키마명 목록 */
     const [schemaNameList, setSchemaNameList] = useState([]);
@@ -250,7 +250,7 @@ const TableMetaReg = () => {
             .post(
                 CmmnUtils.url("METTM04"),
                 CmmnUtils.requestBody({
-                    domainName: searchModalMap.searchInput,
+                    termName: searchModalMap.searchInput,
                 })
             )
             .then((response) => {

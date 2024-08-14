@@ -3,7 +3,7 @@ import { CmmnUtils } from "../../../cmmn/utils/CmmnUtils";
 import { useNavigate } from "react-router-dom";
 import { AlertUtils } from "../../../cmmn/utils/AlertUtils";
 import { LogUtils } from "../../../cmmn/utils/LogUtils";
-import { useGlboalContext } from "../../../context";
+import { useGlobalContext } from "../../../context";
 import PagingCreator from "../../../cmmn/component/PagingCreator";
 
 /**
@@ -13,7 +13,7 @@ import PagingCreator from "../../../cmmn/component/PagingCreator";
  */
 const TermList = () => {
     /** 전역상태 */
-    const { confirmModal } = useGlboalContext();
+    const { confirmModal } = useGlobalContext();
 
     /** defaultMap */
     const [defaultMap, setDefaultMap] = useState({

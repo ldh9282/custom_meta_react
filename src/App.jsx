@@ -27,60 +27,58 @@ function App() {
     return (
         <>
             <Router>
-                <Layout>
-                    <Routes>
-                        <Route path="/" element={<Navigate to="/METTB02" />} />
-                        <Route path="/METLG04" element={<Login />} />
-                        <Route
-                            path="/METDM01"
-                            element={<PrivateRoute element={DomainReg} />}
-                        />
-                        <Route
-                            path="/METDM03"
-                            element={<PrivateRoute element={DomainList} />}
-                        />
-                        <Route
-                            path="/METTM01"
-                            element={<PrivateRoute element={TermReg} />}
-                        />
-                        <Route
-                            path="/METTM03"
-                            element={<PrivateRoute element={TermList} />}
-                        />
-                        <Route
-                            path="/METSC02"
-                            element={<PrivateRoute element={SchemaMetaReg} />}
-                        />
-                        <Route
-                            path="/METTB02"
-                            element={<PrivateRoute element={TableMetaReg} />}
-                        />
-                        <Route
-                            path="/METTB01"
-                            element={<PrivateRoute element={TableMetaList} />}
-                        />
-                        <Route
-                            path="/METCU01"
-                            element={<PrivateRoute element={ColumnMetaList} />}
-                        />
-                        <Route
-                            path="/METCU02"
-                            element={
-                                <PrivateRoute element={ColumnMetaDetail} />
-                            }
-                        />
-                        <Route
-                            path="/METSE01"
-                            element={<PrivateRoute element={SeqMetaList} />}
-                        />
-                    </Routes>
-                </Layout>
+                <Routes>
+                    <Route path="/METLG04" element={<Login />} />
+                    <Route path="/" element={<Navigate to="/METTB02" />} />
+                    <Route
+                        path="/METDM01"
+                        element={<PrivateRoute element={DomainReg} />}
+                    />
+                    <Route
+                        path="/METDM03"
+                        element={<PrivateRoute element={DomainList} />}
+                    />
+                    <Route
+                        path="/METTM01"
+                        element={<PrivateRoute element={TermReg} />}
+                    />
+                    <Route
+                        path="/METTM03"
+                        element={<PrivateRoute element={TermList} />}
+                    />
+                    <Route
+                        path="/METSC02"
+                        element={<PrivateRoute element={SchemaMetaReg} />}
+                    />
+                    <Route
+                        path="/METTB02"
+                        element={<PrivateRoute element={TableMetaReg} />}
+                    />
+                    <Route
+                        path="/METTB01"
+                        element={<PrivateRoute element={TableMetaList} />}
+                    />
+                    <Route
+                        path="/METCU01"
+                        element={<PrivateRoute element={ColumnMetaList} />}
+                    />
+                    <Route
+                        path="/METCU02"
+                        element={<PrivateRoute element={ColumnMetaDetail} />}
+                    />
+                    <Route
+                        path="/METSE01"
+                        element={<PrivateRoute element={SeqMetaList} />}
+                    />
+                </Routes>
             </Router>
             {/* https://fkhadra.github.io/react-toastify/introduction/ */}
             <ToastContainer
                 position="top-center"
-                autoClose={false}
-                newestOnTop={false}
+                limit={1}
+                autoClose={1500}
+                hideProgressBar={true}
+                newestOnTop
                 closeOnClick
                 rtl={false}
                 pauseOnFocusLoss

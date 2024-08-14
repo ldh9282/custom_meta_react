@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useGlboalContext } from "../../../context";
+import { useGlobalContext } from "../../../context";
 import $ from "jquery";
 import { useEffect, useState } from "react";
 import { CmmnUtils } from "../../../cmmn/utils/CmmnUtils";
@@ -8,7 +8,7 @@ import { LogUtils } from "../../../cmmn/utils/LogUtils";
 
 const DomainReg = () => {
     /** 전역상태 */
-    const { confirmModal } = useGlboalContext();
+    const { confirmModal } = useGlobalContext();
 
     /** 등록맵 */
     const [regMap, setRegMap] = useState({

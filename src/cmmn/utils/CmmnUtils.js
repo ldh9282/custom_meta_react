@@ -7,12 +7,6 @@ export class CmmnUtils {
     static axios = axios.create({
         headers: { "Content-Type": "application/json" },
     });
-    static authAxios = axios.create({
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-            "Content-Type": "application/json",
-        },
-    });
     static url(url) {
         if (url.charAt(0) === "/") {
             url = url.substring(1);
@@ -58,3 +52,33 @@ export class CmmnUtils {
         document.title = `${title} | 메타관리시스템`;
     }
 }
+
+// 요청 인터셉터 추가
+CmmnUtils.axios.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem("jwtToken");
+
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+// 응답 인터셉터 추가
+CmmnUtils.axios.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        if (error.response && error.response.status === 401) {
+            localStorage.removeItem("jwtToken");
+            window.location.href = "/METLG04";
+        }
+        return Promise.reject(error);
+    }
+);

@@ -1,5 +1,8 @@
+import { LogUtils } from "./LogUtils";
+
 export class AuthUtils {
     static removeAuthItems() {
+        LogUtils.trace("removeAuthItems");
         localStorage.removeItem("authenticatedYn");
         localStorage.removeItem("authCode");
         localStorage.removeItem("authCodeName");
@@ -26,5 +29,9 @@ export class AuthUtils {
             localStorage.getItem("jwtToken") &&
             localStorage.getItem("authenticatedYn") === "1"
         );
+    }
+
+    static getUsername() {
+        return localStorage.getItem("username");
     }
 }

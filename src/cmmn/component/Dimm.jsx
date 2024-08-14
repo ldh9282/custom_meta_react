@@ -1,7 +1,7 @@
-import { useGlboalContext } from "../../context";
+import { useGlobalContext } from "../../context";
 
 const Dimm = () => {
-    const { dimm } = useGlboalContext();
+    const { dimm } = useGlobalContext();
     return (
         <div
             id="dimm"

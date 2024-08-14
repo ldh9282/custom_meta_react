@@ -19,6 +19,7 @@ const Login = () => {
             username: username,
             password: password,
         };
+
         CmmnUtils.axios
             .post(
                 CmmnUtils.url("METLG05"),
@@ -33,10 +34,9 @@ const Login = () => {
                     AuthUtils.setAuthItems(header);
                     localStorage.setItem("jwtToken", body.jwtToken);
 
-                    AlertUtils.showInfo(
-                        "인증되었습니다",
-                        () => (window.location.href = "/METTB02")
-                    );
+                    AlertUtils.showSuccess("인증되었습니다", () => {
+                        navigate("/");
+                    });
                 } else {
                     AuthUtils.removeAuthItems();
                     AlertUtils.showError(header.errorMsg);

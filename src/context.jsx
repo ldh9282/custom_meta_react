@@ -89,10 +89,10 @@ export const AppProvider = ({ children }) => {
 };
 
 /**
- * @function useGlboalContext
+ * @function useGlobalContext
  * @desc 전역상태사용
  * @returns
  */
-export const useGlboalContext = () => {
+export const useGlobalContext = () => {
     return useContext(AppContext);
 };

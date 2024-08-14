@@ -35,7 +35,7 @@ export class AlertUtils {
         toast.info(
             <Message>{message?.toString().replace(/\n/g, "<br>")}</Message>,
             {
-                onClose: callback,
+                onOpen: callback,
             }
         );
     }
@@ -43,7 +43,7 @@ export class AlertUtils {
         toast.error(
             <Message>{message?.toString().replace(/\n/g, "<br>")}</Message>,
             {
-                onClose: callback,
+                onOpen: callback,
             }
         );
     }
@@ -51,7 +51,7 @@ export class AlertUtils {
         toast.success(
             <Message>{message?.toString().replace(/\n/g, "<br>")}</Message>,
             {
-                onClose: callback,
+                onOpen: callback,
             }
         );
     }
