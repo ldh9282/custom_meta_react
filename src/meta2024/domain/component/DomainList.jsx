@@ -224,6 +224,9 @@ const DomainList = () => {
                                     domainSno: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -241,6 +244,9 @@ const DomainList = () => {
                                     domainName: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -255,6 +261,9 @@ const DomainList = () => {
                                     ...searchMap,
                                     domainType: e.target.value,
                                 })
+                            }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
                             }
                             className="ml-2 p-2 border w-full"
                         />
@@ -274,8 +283,8 @@ const DomainList = () => {
                 <colgroup>
                     <col style={{ width: "15%" }} />
                     <col style={{ width: "35%" }} />
-                    <col style={{ width: "35%" }} />
                     <col style={{ width: "auto" }} />
+                    <col style={{ width: "10%" }} />
                 </colgroup>
                 <thead>
                     <tr className="bg-gray-200">

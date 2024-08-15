@@ -194,6 +194,9 @@ const TableMetaList = () => {
                 LogUtils.debug(error.toString());
             });
     };
+    const handleDetail = (tableMetaSno) => {
+        navigate(`/METTB03?tableMetaSno=${tableMetaSno}`);
+    };
 
     return (
         <div className="text-base font-bold">
@@ -227,6 +230,9 @@ const TableMetaList = () => {
                                     tableMetaSno: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -244,6 +250,9 @@ const TableMetaList = () => {
                                     schemaName: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -259,6 +268,9 @@ const TableMetaList = () => {
                                     tableName: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -273,6 +285,9 @@ const TableMetaList = () => {
                                     ...searchMap,
                                     tableDesc: e.target.value,
                                 })
+                            }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
                             }
                             className="ml-2 p-2 border w-full"
                         />
@@ -293,8 +308,9 @@ const TableMetaList = () => {
                     <col style={{ width: "15%" }} />
                     <col style={{ width: "25%" }} />
                     <col style={{ width: "15%" }} />
-                    <col style={{ width: "25%" }} />
-                    <col style={{ width: "auto" }} />
+                    <col style={{ width: "auto%" }} />
+                    <col style={{ width: "10%" }} />
+                    <col style={{ width: "10%" }} />
                 </colgroup>
                 <thead>
                     <tr className="bg-gray-200">
@@ -302,6 +318,7 @@ const TableMetaList = () => {
                         <th className="p-2 border">스키마명</th>
                         <th className="p-2 border">테이블명</th>
                         <th className="p-2 border">테이블설명</th>
+                        <th className="p-2 border">테이블상세</th>
                         <th className="p-2 border">테이블삭제</th>
                     </tr>
                 </thead>
@@ -320,6 +337,17 @@ const TableMetaList = () => {
                                 </td>
                                 <td className="p-2 border text-center">
                                     {item.tableDesc}
+                                </td>
+                                <td className="p-2 border text-center">
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            handleDetail(item.tableMetaSno)
+                                        }
+                                        className="px-4 py-2 bg-gradient-to-r from-emerald-400 to-emerald-500 text-white rounded-md shadow-md hover:from-emerald-500 hover:to-emerald-600 transition duration-300 transform hover:scale-105 focus:outline-none"
+                                    >
+                                        상세
+                                    </button>
                                 </td>
                                 <td className="p-2 border text-center">
                                     <button

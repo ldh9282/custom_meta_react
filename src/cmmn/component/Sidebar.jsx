@@ -15,7 +15,9 @@ const Sidebar = () => {
     const handleLogout = () => {
         confirmModal.showConfirm("로그아웃하시겠습니까?", () => {
             AuthUtils.removeAuthItems();
-            navigate("/METLG04");
+            AlertUtils.showSuccess("로그아웃되었습니다.", () =>
+                navigate("/METLG04")
+            );
         });
     };
 

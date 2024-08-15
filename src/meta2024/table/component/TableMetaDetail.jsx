@@ -9,7 +9,7 @@ import { useGlobalContext } from "../../../context";
 import { StringUtils } from "../../../cmmn/utils/StringUtils";
 import { RefreshCcw, Search } from "lucide-react";
 
-const TableMetaReg = () => {
+const TableMetaDetail = () => {
     /** 전역상태 */
     const { confirmModal } = useGlobalContext();
 
@@ -807,4 +807,4 @@ const TableMetaReg = () => {
     );
 };
 
-export default TableMetaReg;
+export default TableMetaDetail;

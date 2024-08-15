@@ -1,7 +1,7 @@
 import { CustomMap } from "../model/CustomMap";
 
 export class LogUtils {
-    static isDebugEnabled = true;
+    static isDebugEnabled = false;
 
     static debug(...args) {
         if (LogUtils.isDebugEnabled) {

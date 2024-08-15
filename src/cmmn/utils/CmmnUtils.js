@@ -42,6 +42,9 @@ export class CmmnUtils {
     }
 
     static nvl(value, defaultValue) {
+        if (typeof value === "boolean") {
+            return value;
+        }
         if (!value) {
             return defaultValue;
         }

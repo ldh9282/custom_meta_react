@@ -229,6 +229,9 @@ const TermList = () => {
                                     termSno: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -246,6 +249,9 @@ const TermList = () => {
                                     termName: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -261,6 +267,9 @@ const TermList = () => {
                                     termCamelName: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -275,6 +284,9 @@ const TermList = () => {
                                     ...searchMap,
                                     termSnakeName: e.target.value,
                                 })
+                            }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
                             }
                             className="ml-2 p-2 border w-full"
                         />
@@ -297,8 +309,8 @@ const TermList = () => {
                     <col style={{ width: "15%" }} />
                     <col style={{ width: "15%" }} />
                     <col style={{ width: "15%" }} />
-                    <col style={{ width: "15%" }} />
                     <col style={{ width: "auto" }} />
+                    <col style={{ width: "10%" }} />
                 </colgroup>
                 <thead>
                     <tr className="bg-gray-200">

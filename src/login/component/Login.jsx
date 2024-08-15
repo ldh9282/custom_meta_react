@@ -6,8 +6,17 @@ import { AlertUtils } from "../../cmmn/utils/AlertUtils";
 import { AuthUtils } from "../../cmmn/utils/AuthUtils";
 
 const Login = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [loginMap, setLoginMap] = useState({
+        username:
+            localStorage.getItem("rememberUsernameYn") === "1"
+                ? CmmnUtils.nvl(localStorage.getItem("rememberUsername"), "")
+                : "",
+        password: "",
+        rememberUsernameYn: CmmnUtils.nvl(
+            localStorage.getItem("rememberUsernameYn"),
+            "0"
+        ),
+    });
     const navigate = useNavigate();
 
     /** 초기조회 */
@@ -20,8 +29,8 @@ const Login = () => {
      */
     const handleLogin = () => {
         let requestMap = {
-            username: username,
-            password: password,
+            username: loginMap.username,
+            password: loginMap.password,
         };
 
         CmmnUtils.axios
@@ -76,8 +85,19 @@ const Login = () => {
                                 type="text"
                                 id="username"
                                 name="username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                value={loginMap.username}
+                                onChange={(e) => {
+                                    setLoginMap({
+                                        ...loginMap,
+                                        username: e.target.value,
+                                    });
+                                    if (loginMap.rememberUsernameYn === "1") {
+                                        localStorage.setItem(
+                                            "rememberUsername",
+                                            e.target.value
+                                        );
+                                    }
+                                }}
                                 required
                                 className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                             />
@@ -96,8 +116,13 @@ const Login = () => {
                                 type="password"
                                 id="password"
                                 name="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={loginMap.password}
+                                onChange={(e) =>
+                                    setLoginMap({
+                                        ...loginMap,
+                                        password: e.target.value,
+                                    })
+                                }
                                 required
                                 className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                             />
@@ -109,6 +134,31 @@ const Login = () => {
                             type="checkbox"
                             id="remember-me"
                             name="remember-me"
+                            checked={loginMap.rememberUsernameYn === "1"}
+                            onChange={(e) => {
+                                let theRememberUsernameYn =
+                                    loginMap.rememberUsernameYn === "1"
+                                        ? "0"
+                                        : "1";
+                                setLoginMap({
+                                    ...loginMap,
+                                    rememberUsernameYn: theRememberUsernameYn,
+                                });
+                                localStorage.setItem(
+                                    "rememberUsernameYn",
+                                    theRememberUsernameYn
+                                );
+                                if (
+                                    localStorage.getItem(
+                                        "rememberUsernameYn"
+                                    ) === "1"
+                                ) {
+                                    localStorage.setItem(
+                                        "rememberUsername",
+                                        loginMap.username
+                                    );
+                                }
+                            }}
                             className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                         />
                         <label
@@ -131,10 +181,7 @@ const Login = () => {
 
                     <div className="text-center text-sm text-gray-600 mt-4">
                         계정이 없으신가요?{" "}
-                        <a
-                            href="/METLG02"
-                            className="text-blue-500 hover:underline"
-                        >
+                        <a href="/" className="text-blue-500 hover:underline">
                             계정만들기
                         </a>
                     </div>

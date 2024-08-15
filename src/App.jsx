@@ -22,6 +22,7 @@ import TermReg from "./meta2024/term/component/TermReg";
 import TermList from "./meta2024/term/component/TermList";
 import PrivateRoute from "./cmmn/component/PrivateRoute";
 import Login from "./login/component/Login";
+import TableMetaDetail from "./meta2024/table/component/TableMetaDetail";
 
 function App() {
     return (
@@ -49,6 +50,10 @@ function App() {
                     <Route
                         path="/METSC02"
                         element={<PrivateRoute element={SchemaMetaReg} />}
+                    />
+                    <Route
+                        path="/METTB03"
+                        element={<PrivateRoute element={TableMetaDetail} />}
                     />
                     <Route
                         path="/METTB02"

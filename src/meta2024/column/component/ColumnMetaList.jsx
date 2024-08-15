@@ -209,6 +209,9 @@ const ColumnMetaList = () => {
                                     columnMetaSno: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -226,6 +229,9 @@ const ColumnMetaList = () => {
                                     columnName: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -238,8 +244,11 @@ const ColumnMetaList = () => {
                             onChange={(e) =>
                                 setSearchMap({
                                     ...searchMap,
-                                    schemaName: e.target.value,
+                                    columnCamelName: e.target.value,
                                 })
+                            }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
                             }
                             className="ml-2 p-2 border w-full"
                         />
@@ -255,6 +264,9 @@ const ColumnMetaList = () => {
                                     ...searchMap,
                                     columnSnakeName: e.target.value,
                                 })
+                            }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
                             }
                             className="ml-2 p-2 border w-full"
                         />
@@ -273,6 +285,9 @@ const ColumnMetaList = () => {
                                     schemaName: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -288,6 +303,9 @@ const ColumnMetaList = () => {
                                     tableName: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -302,6 +320,9 @@ const ColumnMetaList = () => {
                                     ...searchMap,
                                     tableDesc: e.target.value,
                                 })
+                            }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
                             }
                             className="ml-2 p-2 border w-full"
                         />
@@ -319,17 +340,21 @@ const ColumnMetaList = () => {
             </form>
             <table className="w-full bg-white border mt-3">
                 <colgroup>
-                    <col style={{ width: "15%" }} />
-                    <col style={{ width: "25%" }} />
-                    <col style={{ width: "15%" }} />
-                    <col style={{ width: "15%" }} />
-                    <col style={{ width: "15%" }} />
+                    <col style={{ width: "10%" }} />
                     <col style={{ width: "auto" }} />
+                    <col style={{ width: "15%" }} />
+                    <col style={{ width: "15%" }} />
+                    <col style={{ width: "10%" }} />
+                    <col style={{ width: "10%" }} />
+                    <col style={{ width: "10%" }} />
+                    <col style={{ width: "10%" }} />
                 </colgroup>
                 <thead>
                     <tr className="bg-gray-200">
                         <th className="p-2 border">컬럼메타일련번호</th>
                         <th className="p-2 border">컬럼명</th>
+                        <th className="p-2 border">컬럼카멜명</th>
+                        <th className="p-2 border">컬럼스네이크명</th>
                         <th className="p-2 border">스키마명</th>
                         <th className="p-2 border">테이블명</th>
                         <th className="p-2 border">테이블설명</th>
@@ -345,6 +370,12 @@ const ColumnMetaList = () => {
                                 </td>
                                 <td className="p-2 border text-center">
                                     {item.columnName}
+                                </td>
+                                <td className="p-2 border text-center">
+                                    {item.columnCamelName}
+                                </td>
+                                <td className="p-2 border text-center">
+                                    {item.columnSnakeName}
                                 </td>
                                 <td className="p-2 border text-center">
                                     {item.schemaName}

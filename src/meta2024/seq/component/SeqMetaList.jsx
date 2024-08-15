@@ -200,6 +200,9 @@ const SeqMetaList = () => {
                                     seqMetaSno: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -216,6 +219,9 @@ const SeqMetaList = () => {
                                     ...searchMap,
                                     seqName: e.target.value,
                                 })
+                            }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
                             }
                             className="ml-2 p-2 border w-full"
                         />
@@ -234,6 +240,9 @@ const SeqMetaList = () => {
                                     schemaName: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -249,6 +258,9 @@ const SeqMetaList = () => {
                                     tableName: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
+                            }
                             className="ml-2 p-2 border w-full"
                         />
                     </div>
@@ -263,6 +275,9 @@ const SeqMetaList = () => {
                                     ...searchMap,
                                     tableDesc: e.target.value,
                                 })
+                            }
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && handleSearch()
                             }
                             className="ml-2 p-2 border w-full"
                         />
