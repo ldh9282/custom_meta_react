@@ -31,6 +31,12 @@ export class AlertUtils {
         return true;
     }
 
+    /**
+     * @function showInfo
+     * @desc onOpen callback. navigate 할때 사용
+     * @param {string} message
+     * @param {Function} callback
+     */
     static showInfo(message, callback) {
         toast.info(
             <Message>{message?.toString().replace(/\n/g, "<br>")}</Message>,
@@ -39,6 +45,26 @@ export class AlertUtils {
             }
         );
     }
+    /**
+     * @function showInfo2
+     * @desc onClose callback. 페이지 새로고침 및 이동시 사용
+     * @param {string} message
+     * @param {Function} callback
+     */
+    static showInfo2(message, callback) {
+        toast.info(
+            <Message>{message?.toString().replace(/\n/g, "<br>")}</Message>,
+            {
+                onClose: callback,
+            }
+        );
+    }
+    /**
+     * @function showError
+     * @desc onClose callback. navigate 할때 사용
+     * @param {string} message
+     * @param {Function} callback
+     */
     static showError(message, callback) {
         toast.error(
             <Message>{message?.toString().replace(/\n/g, "<br>")}</Message>,
@@ -47,11 +73,45 @@ export class AlertUtils {
             }
         );
     }
+    /**
+     * @function showError2
+     * @desc onClose callback. 페이지 새로고침 및 이동시 사용
+     * @param {string} message
+     * @param {Function} callback
+     */
+    static showError2(message, callback) {
+        toast.error(
+            <Message>{message?.toString().replace(/\n/g, "<br>")}</Message>,
+            {
+                onClose: callback,
+            }
+        );
+    }
+    /**
+     * @function showSuccess
+     * @desc onOpen callback. navigate 할때 사용
+     * @param {string} message
+     * @param {Function} callback
+     */
     static showSuccess(message, callback) {
         toast.success(
             <Message>{message?.toString().replace(/\n/g, "<br>")}</Message>,
             {
                 onOpen: callback,
+            }
+        );
+    }
+    /**
+     * @function showSuccess2
+     * @desc onClose callback. 페이지 새로고침 및 이동시 사용
+     * @param {string} message
+     * @param {Function} callback
+     */
+    static showSuccess2(message, callback) {
+        toast.success(
+            <Message>{message?.toString().replace(/\n/g, "<br>")}</Message>,
+            {
+                onClose: callback,
             }
         );
     }

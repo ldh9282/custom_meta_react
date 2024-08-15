@@ -118,7 +118,7 @@ const TermList = () => {
                 .then((response) => {
                     let header = CmmnUtils.header(response);
                     if (header.status === "0000") {
-                        AlertUtils.showSuccess("삭제되었습니다", function () {
+                        AlertUtils.showSuccess2("삭제되었습니다", function () {
                             window.location.reload();
                         });
                     } else {
@@ -284,7 +284,7 @@ const TermList = () => {
                     <button
                         type="button"
                         onClick={handleSearch}
-                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                        className="px-4 py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-md shadow-md hover:from-blue-500 hover:to-blue-600 transition duration-300 transform hover:scale-105 focus:outline-none"
                     >
                         검색
                     </button>
@@ -342,7 +342,7 @@ const TermList = () => {
                                                 item.termSno
                                             )
                                         }
-                                        className="bg-red-500 text-white px-4 py-2 rounded"
+                                        className="px-4 py-2 bg-gradient-to-r from-red-400 to-red-500 text-white rounded-md shadow-md hover:from-red-500 hover:to-red-600 transition duration-300 transform hover:scale-105 focus:outline-none"
                                     >
                                         삭제
                                     </button>

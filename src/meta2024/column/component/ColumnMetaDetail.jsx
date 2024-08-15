@@ -50,7 +50,7 @@ const ColumnMetaDetail = () => {
                 .then((response) => {
                     let header = CmmnUtils.header(response);
                     if (header.status === "0000") {
-                        AlertUtils.showSuccess("수정되었습니다", () => {
+                        AlertUtils.showSuccess2("수정되었습니다", () => {
                             window.location.reload();
                         });
                     } else {

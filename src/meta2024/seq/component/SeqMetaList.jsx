@@ -272,7 +272,7 @@ const SeqMetaList = () => {
                     <button
                         type="button"
                         onClick={handleSearch}
-                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                        className="px-4 py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-md shadow-md hover:from-blue-500 hover:to-blue-600 transition duration-300 transform hover:scale-105 focus:outline-none"
                     >
                         검색
                     </button>

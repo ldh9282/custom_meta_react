@@ -24,7 +24,7 @@ const Sidebar = () => {
             <div className="bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 p-6 mb-3 rounded-lg shadow-lg mx-3 mt-3">
                 <div className="text-center">
                     <div className="text-lg font-bold text-gray-900 mb-3">
-                        {AuthUtils.getUsername()}님, 안녕하세요
+                        {AuthUtils.getUsername()}님 안녕하세요
                     </div>
                     <div className="text-lg font-bold text-gray-800">
                         <Timer />

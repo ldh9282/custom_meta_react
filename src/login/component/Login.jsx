@@ -10,6 +10,10 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    /** 초기조회 */
+    useEffect(() => {
+        CmmnUtils.setTitle("로그인");
+    }, []);
     /**
      * @function handleLogin
      * @desc 로그인처리
@@ -43,6 +47,7 @@ const Login = () => {
                 }
             })
             .catch((error) => {
+                AlertUtils.showError("잠시후 시도해주세요.");
                 AuthUtils.removeAuthItems();
                 LogUtils.debug(error.toString());
             });
@@ -52,7 +57,7 @@ const Login = () => {
         <main className="min-h-screen flex items-center justify-center py-4 bg-gray-100">
             <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
                 <div className="text-center mb-6">
-                    <h5 className="text-2xl font-bold">로그인 v2</h5>
+                    <h5 className="text-xl font-bold mb-2">로그인</h5>
                     <p className="text-sm text-gray-600">
                         아이디와 비밀번호를 입력해주세요
                     </p>

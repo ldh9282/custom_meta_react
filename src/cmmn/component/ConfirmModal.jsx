@@ -8,8 +8,9 @@ const customStyles = {
         backgroundColor: "rgba(0, 0, 0, 0.7)",
         zIndex: 50, // z-index 값 설정
         display: "flex",
-        alignItems: "center",
+        alignItems: "flex-start",
         justifyContent: "center",
+        paddingTop: "10vh",
     },
     content: {
         width: "400px",
@@ -59,13 +60,13 @@ const ConfirmModal = () => {
                 </div>
                 <div className="flex justify-center gap-6">
                     <button
-                        className="px-5 py-3 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-md shadow-md hover:from-blue-500 hover:to-blue-600 transition duration-300 transform hover:scale-105 focus:outline-none"
+                        className="px-4 py-2 bg-gradient-to-r from-emerald-400 to-emerald-500 text-white rounded-md shadow-md hover:from-emerald-500 hover:to-emerald-600 transition duration-300 transform hover:scale-105 focus:outline-none"
                         onClick={handleConfirm}
                     >
                         확인
                     </button>
                     <button
-                        className="px-5 py-3 bg-gray-200 text-gray-800 rounded-md shadow-md hover:bg-gray-300 transition duration-300 transform hover:scale-105 focus:outline-none"
+                        className="px-4 py-2 bg-gradient-to-r from-red-400 to-red-500 text-white rounded-md shadow-md hover:from-red-500 hover:to-red-600 transition duration-300 transform hover:scale-105 focus:outline-none"
                         onClick={handleClose}
                     >
                         취소
