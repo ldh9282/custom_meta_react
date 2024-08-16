@@ -61,7 +61,7 @@ export class AlertUtils {
     }
     /**
      * @function showError
-     * @desc onClose callback. navigate 할때 사용
+     * @desc onOpen callback. navigate 할때 사용
      * @param {string} message
      * @param {Function} callback
      */

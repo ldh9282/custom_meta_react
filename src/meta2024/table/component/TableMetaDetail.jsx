@@ -13,14 +13,13 @@ const TableMetaDetail = () => {
     /** 전역상태 */
     const { confirmModal } = useGlobalContext();
 
-    /** 스키마명 목록 */
-    const [schemaNameList, setSchemaNameList] = useState([]);
-    /** 스키마명 */
-    const [schemaName, setSchemaName] = useState("");
-    /** 테이블명 */
-    const [tableName, setTableName] = useState("");
-    /** 테이블설명 */
-    const [tableDesc, setTableDesc] = useState("");
+    /** detailMap */
+    const [detailMap, setDetailMap] = useState({
+        tableMetaSno: "",
+        schemaName: "",
+        tableName: "",
+        tableDesc: "",
+    });
     /** pk목록 */
     const [pkColumns, setPkColumns] = useState([]);
     /** 컬럼목록 */
@@ -30,7 +29,7 @@ const TableMetaDetail = () => {
     const [searchModalMap, setSearchModalMap] = useState({
         isOpen: false,
         pkColumnYn: "",
-        id: "",
+        columnMetaSno: "",
         searchInput: "",
         searchResults: [],
         selectedItem: {},
@@ -40,16 +39,58 @@ const TableMetaDetail = () => {
 
     /** 초기조회 */
     useEffect(() => {
-        CmmnUtils.setTitle("테이블 생성");
+        CmmnUtils.setTitle("테이블 상세");
+
+        const queryParams = new URLSearchParams(location.search);
+
+        const theTableMetaSno = queryParams.get("tableMetaSno");
+
+        let requsetMap = {
+            tableMetaSno: theTableMetaSno,
+        };
 
         CmmnUtils.axios
-            .get(CmmnUtils.url("METTB02"), CmmnUtils.requestParam({}))
+            .get(CmmnUtils.url("METTB03"), CmmnUtils.requestParam(requsetMap))
             .then((response) => {
                 let header = CmmnUtils.header(response);
                 if (header.status === "0000") {
-                    let schemaNameInfo =
-                        CmmnUtils.body(response).schemaNameInfo;
-                    setSchemaNameList(schemaNameInfo.list);
+                    let body = CmmnUtils.body(response);
+                    let detail = body.detail;
+
+                    setDetailMap({
+                        ...detailMap,
+                        tableMetaSno: detail.tableMetaInfo.tableMetaSno,
+                        schemaName: detail.tableMetaInfo.schemaName,
+                        tableName: detail.tableMetaInfo.tableName,
+                        tableDesc: detail.tableMetaInfo.tableDesc,
+                    });
+
+                    let thePkColumns = [];
+                    let theColumns = [];
+                    detail.tableColumnList.forEach((item) => {
+                        if (item.pkColumnYn === "1") {
+                            thePkColumns.push({
+                                columnMetaSno: item.columnMetaSno,
+                                columnName: item.columnName,
+                                columnCamelName: item.columnCamelName,
+                                columnSnakeName: item.columnSnakeName,
+                                columnType: item.columnType,
+                            });
+                        } else if (
+                            item.pkColumnYn === "0" &&
+                            item.sysColumnYn === "0"
+                        ) {
+                            theColumns.push({
+                                columnMetaSno: item.columnMetaSno,
+                                columnName: item.columnName,
+                                columnCamelName: item.columnCamelName,
+                                columnSnakeName: item.columnSnakeName,
+                                columnType: item.columnType,
+                            });
+                        }
+                    });
+                    setPkColumns(thePkColumns);
+                    setColumns(theColumns);
                 } else {
                     AlertUtils.showError(header.errorMsg);
                 }
@@ -93,15 +134,20 @@ const TableMetaDetail = () => {
      * @function handleColumnInputChange
      * @desc 컬럼인풋변경
      * @param {string} pkColumnYn
-     * @param {string} theId
+     * @param {string} columnMetaSno
      * @param {string} fieldName
      * @param {string} value
      */
-    const handleColumnInputChange = (pkColumnYn, theId, fieldName, value) => {
+    const handleColumnInputChange = (
+        pkColumnYn,
+        columnMetaSno,
+        fieldName,
+        value
+    ) => {
         if (pkColumnYn === "1") {
             const thePkColumns = [...pkColumns];
             thePkColumns.forEach((item) => {
-                if (item.id === theId) {
+                if (item.columnMetaSno === columnMetaSno) {
                     if (fieldName === "columnCamelName") {
                         item[fieldName] =
                             value.charAt(0).toLowerCase() + value.slice(1);
@@ -117,7 +163,7 @@ const TableMetaDetail = () => {
         } else {
             const theColumns = [...columns];
             theColumns.forEach((item) => {
-                if (item.id === theId) {
+                if (item.columnMetaSno === columnMetaSno) {
                     if (fieldName === "columnCamelName") {
                         item[fieldName] =
                             value.charAt(0).toLowerCase() + value.slice(1);
@@ -137,31 +183,30 @@ const TableMetaDetail = () => {
      * @function handleRemoveColumn
      * @desc 컬럼 삭제
      * @param {string} pkColumnYn
-     * @param {string} theId
+     * @param {string} columnMetaSno
      */
-    const handleRemoveColumn = (pkColumnYn, theId) => {
+    const handleRemoveColumn = (pkColumnYn, columnMetaSno) => {
         if (pkColumnYn === "1") {
             const thePkColumns = [...pkColumns];
             const removedPkColumns = thePkColumns.filter(
-                (item) => item.id !== theId
+                (item) => item.columnMetaSno !== columnMetaSno
             );
             setPkColumns(removedPkColumns);
         } else {
             const theColumns = [...columns];
-            theColumns.filter((item) => item.id !== theId);
             const removedColumns = theColumns.filter(
-                (item) => item.id !== theId
+                (item) => item.columnMetaSno !== columnMetaSno
             );
             setColumns(removedColumns);
         }
     };
 
     /**
-     * @function handleRegister
-     * @desc 테이블 등록요청
+     * @function handleModify
+     * @desc 테이블 수정요청
      * @returns
      */
-    const handleRegister = () => {
+    const handleModify = () => {
         // 필수값 입력체크
         var fieldList = [];
         $("#main input.form-input, #main select.form-select").each(function () {
@@ -173,23 +218,22 @@ const TableMetaDetail = () => {
         if (!AlertUtils.checkRequiredFields(fieldList)) {
             return;
         }
-        confirmModal.showConfirm("등록하시겠습니까?", function () {
+        confirmModal.showConfirm("수정하시겠습니까?", function () {
             let requestMap = {
-                schemaName: schemaName,
-                tableName: tableName,
-                tableDesc: tableDesc,
+                tableMetaSno: detailMap.tableMetaSno,
+                tableDesc: detailMap.tableDesc,
                 columnList: columns,
                 pkColumnList: pkColumns,
             };
             CmmnUtils.axios
                 .post(
-                    CmmnUtils.url("METTB04"),
+                    CmmnUtils.url("METTB06"),
                     CmmnUtils.requestBody(requestMap)
                 )
                 .then((response) => {
                     let header = CmmnUtils.header(response);
                     if (header.status === "0000") {
-                        AlertUtils.showSuccess("등록되었습니다", () =>
+                        AlertUtils.showSuccess("수정되었습니다", () =>
                             navigate("/METTB01")
                         );
                     } else {
@@ -206,11 +250,11 @@ const TableMetaDetail = () => {
      * @function handleResetColumn
      * @desc 컬럼리셋
      */
-    const handleResetColumn = (pkColumnYn, theId) => {
+    const handleResetColumn = (pkColumnYn, columnMetaSno) => {
         if (pkColumnYn === "1") {
             const thePkColumns = [...pkColumns];
             thePkColumns.forEach((item) => {
-                if (item.id === theId) {
+                if (item.columnMetaSno === columnMetaSno) {
                     item.columnName = "";
                     item.columnCamelName = "";
                     item.columnSnakeName = "";
@@ -222,7 +266,7 @@ const TableMetaDetail = () => {
         } else {
             const theColumns = [...columns];
             theColumns.forEach((item) => {
-                if (item.id === theId) {
+                if (item.columnMetaSno === columnMetaSno) {
                     item.columnName = "";
                     item.columnCamelName = "";
                     item.columnSnakeName = "";
@@ -280,15 +324,15 @@ const TableMetaDetail = () => {
     /**
      * @function handleOpenModal
      * @param {string} pkColumnYn
-     * @param {string} id
+     * @param {string} columnMetaSno
      * @desc 검색모달열림
      */
-    const handleOpenModal = (pkColumnYn, id) => {
+    const handleOpenModal = (pkColumnYn, columnMetaSno) => {
         setSearchModalMap({
             ...searchModalMap,
             isOpen: true,
             pkColumnYn: pkColumnYn,
-            id: id,
+            columnMetaSno: columnMetaSno,
             searchInput: "",
             searchResults: [],
             selectedItem: {},
@@ -308,7 +352,7 @@ const TableMetaDetail = () => {
         if (searchModalMap.pkColumnYn === "1") {
             const thePkColumns = [...pkColumns];
             thePkColumns.forEach((item) => {
-                if (item.id === searchModalMap.id) {
+                if (item.columnMetaSno === searchModalMap.columnMetaSno) {
                     if (searchModalMap.selectedItem.termSno) {
                         item.termSno = searchModalMap.selectedItem.termSno;
                         item.columnName = searchModalMap.selectedItem.termName;
@@ -326,7 +370,7 @@ const TableMetaDetail = () => {
         } else {
             const theColumns = [...columns];
             theColumns.forEach((item) => {
-                if (item.id === searchModalMap.id) {
+                if (item.columnMetaSno === searchModalMap.columnMetaSno) {
                     if (searchModalMap.selectedItem.termSno) {
                         item.termSno = searchModalMap.selectedItem.termSno;
                         item.columnName = searchModalMap.selectedItem.termName;
@@ -363,26 +407,18 @@ const TableMetaDetail = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mt-5 mb-5">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700">
+                            <label
+                                htmlFor="tableName"
+                                className="block text-sm font-medium text-gray-700"
+                            >
                                 스키마명
                             </label>
-                            <select
-                                className="form-select mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                value={schemaName}
-                                onChange={(e) => setSchemaName(e.target.value)}
-                            >
-                                <option value=""></option>
-                                {schemaNameList.map((item) => {
-                                    return (
-                                        <option
-                                            value={item.schemaName}
-                                            key={nanoid()}
-                                        >
-                                            {item.schemaName}
-                                        </option>
-                                    );
-                                })}
-                            </select>
+                            <input
+                                type="text"
+                                className="form-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                value={detailMap.schemaName}
+                                readOnly
+                            />
                         </div>
 
                         <div>
@@ -395,10 +431,8 @@ const TableMetaDetail = () => {
                             <input
                                 type="text"
                                 className="form-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                value={tableName}
-                                onChange={(e) =>
-                                    setTableName(e.target.value.toUpperCase())
-                                }
+                                value={detailMap.tableName}
+                                readOnly
                             />
                         </div>
 
@@ -412,8 +446,8 @@ const TableMetaDetail = () => {
                             <input
                                 type="text"
                                 className="form-input mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                value={tableDesc}
-                                onChange={(e) => setTableDesc(e.target.value)}
+                                value={detailMap.tableDesc}
+                                readOnly
                             />
                         </div>
                     </div>
@@ -428,7 +462,7 @@ const TableMetaDetail = () => {
                         </button>
                         <div>
                             {pkColumns.map((item) => (
-                                <div key={item.id}>
+                                <div key={item.columnMetaSno}>
                                     <div className="grid gap-6 md:grid-cols-5">
                                         <div className="flex justify-end">
                                             <button
@@ -436,7 +470,7 @@ const TableMetaDetail = () => {
                                                 onClick={() =>
                                                     handleOpenModal(
                                                         "1",
-                                                        item.id
+                                                        item.columnMetaSno
                                                     )
                                                 }
                                                 className="mr-2"
@@ -448,7 +482,7 @@ const TableMetaDetail = () => {
                                                 onClick={() =>
                                                     handleResetColumn(
                                                         "1",
-                                                        item.id
+                                                        item.columnMetaSno
                                                     )
                                                 }
                                             >
@@ -468,7 +502,7 @@ const TableMetaDetail = () => {
                                                 onChange={(e) =>
                                                     handleColumnInputChange(
                                                         "1",
-                                                        item.id,
+                                                        item.columnMetaSno,
                                                         "columnName",
                                                         e.target.value
                                                     )
@@ -486,7 +520,7 @@ const TableMetaDetail = () => {
                                                 onChange={(e) =>
                                                     handleColumnInputChange(
                                                         "1",
-                                                        item.id,
+                                                        item.columnMetaSno,
                                                         "columnCamelName",
                                                         e.target.value
                                                     )
@@ -515,7 +549,7 @@ const TableMetaDetail = () => {
                                                 onChange={(e) =>
                                                     handleColumnInputChange(
                                                         "1",
-                                                        item.id,
+                                                        item.columnMetaSno,
                                                         "columnType",
                                                         e.target.value
                                                     )
@@ -529,7 +563,7 @@ const TableMetaDetail = () => {
                                                 onClick={() =>
                                                     handleRemoveColumn(
                                                         "1",
-                                                        item.id
+                                                        item.columnMetaSno
                                                     )
                                                 }
                                             >
@@ -552,7 +586,7 @@ const TableMetaDetail = () => {
                         </button>
                         <div>
                             {columns.map((item) => (
-                                <div key={item.id}>
+                                <div key={item.columnMetaSno}>
                                     <div className="grid gap-6 md:grid-cols-5">
                                         <div className="flex justify-end">
                                             <button
@@ -560,7 +594,7 @@ const TableMetaDetail = () => {
                                                 onClick={() =>
                                                     handleOpenModal(
                                                         "0",
-                                                        item.id
+                                                        item.columnMetaSno
                                                     )
                                                 }
                                                 className="mr-2"
@@ -572,7 +606,7 @@ const TableMetaDetail = () => {
                                                 onClick={() =>
                                                     handleResetColumn(
                                                         "0",
-                                                        item.id
+                                                        item.columnMetaSno
                                                     )
                                                 }
                                             >
@@ -592,7 +626,7 @@ const TableMetaDetail = () => {
                                                 onChange={(e) =>
                                                     handleColumnInputChange(
                                                         "0",
-                                                        item.id,
+                                                        item.columnMetaSno,
                                                         "columnName",
                                                         e.target.value
                                                     )
@@ -610,7 +644,7 @@ const TableMetaDetail = () => {
                                                 onChange={(e) =>
                                                     handleColumnInputChange(
                                                         "0",
-                                                        item.id,
+                                                        item.columnMetaSno,
                                                         "columnCamelName",
                                                         e.target.value
                                                     )
@@ -639,7 +673,7 @@ const TableMetaDetail = () => {
                                                 onChange={(e) =>
                                                     handleColumnInputChange(
                                                         "0",
-                                                        item.id,
+                                                        item.columnMetaSno,
                                                         "columnType",
                                                         e.target.value
                                                     )
@@ -653,7 +687,7 @@ const TableMetaDetail = () => {
                                                 onClick={() =>
                                                     handleRemoveColumn(
                                                         "0",
-                                                        item.id
+                                                        item.columnMetaSno
                                                     )
                                                 }
                                             >
@@ -670,9 +704,9 @@ const TableMetaDetail = () => {
                         <button
                             type="button"
                             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                            onClick={handleRegister}
+                            onClick={handleModify}
                         >
-                            등록
+                            수정
                         </button>
                         <button
                             type="button"
